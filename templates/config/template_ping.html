@@ -1,0 +1,77 @@
+<link rel="stylesheet" href="{{ url_for('static', filename='plugins/sweetalert/sweetalert.css') }}">
+<div class="box box-primary" style="min-height: 640px">
+    <div class="box-header with-border">
+      <h3 class="box-title">监控模版管理</h3>
+        <button class="pull-right btn btn-sm btn-warning" onclick="window.history.go(-1)">返回</button>
+    </div><!-- /.box-header -->
+    <div class="box-body no-padding">
+            <table id="team_list" class="table table-striped table-bordered">
+            <tr><th>PING模版名称</th><th>PING间隔(秒)</th><th>创建者</th><th></th></tr>
+            {% for i in templates %}
+                <tr id="cpm_{{ i.cpm_id }}">
+                    <td>{{ i.name }}</td>
+                    <td class="allow">{{ i.interval }}</td>
+                    <td>{{ i.creator }}</td>
+                    <td style="width:200px">
+                        <button class="btn btn-xs btn-primary" onclick="ping_template_change(this,'{{ i.cpm_id }}')">修改</button>
+                        <button class="btn btn-xs btn-success" onclick="ping_template_save(this,'{{ i.cpm_id }}')" style="display: none;">保存</button>
+                        <button class="btn btn-xs btn-danger"
+                              onclick="deleteTarget('{{ item.mt_id }}')" disabled> 删除</button>
+                    </td>
+                </tr>
+            {% endfor %}
+            </table>
+    </div><!-- /.box-body -->
+    <div class="box-footer no-padding">
+        {% include "page.html" %}
+    </div>
+</div>
+
+<div class="modal fade" id="add_template_ping_modal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 id="modal_mail_con_add_title" class="modal-title">添加ping监控模版</h4>
+            </div>
+            <div class="modal-body">
+          <div class="form-horizontal">
+              <form class="box-body">
+                  <div class="form-group">
+                    <label for="cm_type" class="control-label">模板类型:</label>
+                    <input id="cm_type" type="text" name="cm_type" class="form-control" value="PING" readonly>
+                  </div>
+                  <div class="form-group">
+                    <label for="cm_name" class="control-label">模板名称:</label><span id="cm_name_tip"></span>
+                    <input id="cm_name" type="text" name="cm_name" class="form-control">
+                  </div>
+                  <div class="form-group">
+                    <label for="cm_interval">采集频率</label>
+                    <select id="cm_interval" name="cm_interval" class="form-control"style="width: 100%;" tabindex="-1" aria-hidden="true">
+                        <option value="30"> 30秒</option>
+                        <option value="60"> 1分钟</option>
+                        <option value="300" selected="selected"> 5分钟</option>
+                        <option value="600">10分钟</option>
+                        <option value="3600">60分钟</option>
+                    </select>
+                </div>
+              </form>
+          </div>
+      </div>
+            <div class="modal-footer">
+                <span id="mails_filter_config_tips"></span>
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" onclick="ping_template_add('{{ g.user }}')">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+<script src="{{ url_for('static', filename='plugins/jquery/jquery-2.1.4.min.js') }}"></script>
+<script src="{{ url_for('static', filename='plugins/sweetalert/sweetalert.min.js') }}"></script>

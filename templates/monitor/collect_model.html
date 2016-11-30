@@ -1,0 +1,160 @@
+{% if monitor_type == "PING" %}
+<div class="form-group">
+    <label id="lalalal">数据采集详情:</label>
+    <div class="simple-box">
+        <label for="collect_interval">监控频率</label>
+        <span id="collect_interval"  class="badge bg-red"> </span>秒
+</div></div>
+
+<!-- Modal -->
+<div class="modal fade" id="collect_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">创建监控模板</h4>
+      </div>
+      <div class="modal-body">
+          <div class="row">
+              <div class="col-md-12">
+                  <div class="form-group">
+                    <label for="cm_type" class="control-label">模板类型:</label>
+                    <input id="cm_type" type="text" name="cm_type" class="form-control" value="PING" readonly>
+                  </div>
+                  <div class="form-group">
+                    <label for="cm_name" class="control-label">模板名称:</label><span id="cm_name_tip"></span>
+                    <input id="cm_name" type="text" name="cm_name" class="form-control">
+                  </div>
+                  <div class="form-group">
+                    <label for="cm_interval">采集频率</label>
+                    <select id="cm_interval" name="cm_interval" class="form-control"style="width: 100%;" tabindex="-1" aria-hidden="true">
+                        <option value="30"> 30秒</option>
+                        <option value="60"> 1分钟</option>
+                        <option value="300" selected="selected"> 5分钟</option>
+                        <option value="600">10分钟</option>
+                        <option value="3600">60分钟</option>
+                    </select>
+                </div>
+              </div>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" onclick="inputPingCollectModel('{{ g.user }}')">确定</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">取消</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% elif monitor_type == "HTTP" %}
+<div class="form-group zeropm">
+    <label>数据采集详情:</label>
+    <div>
+        <div >
+              <!-- Custom Tabs -->
+            {% set tab_id = ('collect_interval_tab','collect_method_tab','collect_postcontent_tab','collect_response_tab','collect_match_tab','collect_cookie_tab') %}
+            {% set content_id = ('collect_interval','collect_method','collect_postcontent','collect_response','collect_match','collect_cookie') %}
+            {% set tabname = ('监控频率','请求方法','POST内容','响应内容','匹配方式','cookie') %}
+            {% set n = range(0,6) %}
+              <div class="nav-tabs-custom zeropm">
+                <ul class="nav nav-tabs col-sm-12">
+                    {% for i in n %}
+                        <li class="{% if i == 0 %}active{% endif %}">
+                            <a class="collect-http-tab" href="#{{ tab_id[i] }}" data-toggle="tab" aria-hidden="false">{{ tabname[i] }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+                <div class="tab-content">
+                     {% for i in n %}
+                    <div class="tab-pane{% if i == 0 %} active {% endif %}" id="{{ tab_id[i] }}">
+                        <span id="{{ content_id[i] }}">
+
+                        </span>
+                    </div>
+                    {% endfor %}
+                </div><!-- /.tab-content -->
+              </div><!-- nav-tabs-custom -->
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="collect_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">创建监控模板</h4>
+      </div>
+      <div class="modal-body">
+          <div class="row">
+              <div class="col-md-12">
+                  <div class="form-group">
+                                    <div class="form-group">
+                    <label for="cm_type" class="control-label">模板类型:</label>
+                    <input id="cm_type" type="text" name="cm_type" class="form-control" value="HTTP" readonly>
+                  </div>
+                  <div class="form-group">
+                    <label for="cm_name" class="control-label">模板名称:</label><span id="cm_name_tip"></span>
+                    <input id="cm_name" type="text" name="cm_name" class="form-control">
+                  </div>
+                  <div class="form-group">
+                    <label for="cm_interval">采集频率</label>
+                    <select id="cm_interval" name="cm_interval" class="form-control"style="width: 100%;" tabindex="-1" aria-hidden="true">
+                        <option value="30"> 30秒</option>
+                        <option value="60"> 1分钟</option>
+                        <option value="300" selected="selected"> 5分钟</option>
+                        <option value="600">10分钟</option>
+                        <option value="3600">60分钟</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group">
+                      <label for="cm_method" class="control-label">HTTP请求方法</label><span id="cm_method_tip"></span>
+                      <div class="radio">
+                        <label><input type="radio" name="cm_method" value="get" checked="checked">GET</label>
+                          <br/>
+                        <label><input type="radio" name="cm_method" value="post">POST</label>
+                          <br/>
+                        <label><input type="radio" name="cm_method" value="head">HEAD</label>
+                      </div>
+                  </div>
+
+                  <div class="form-group" id="div_postcontent" hidden="hidden">
+                      <label for="cm_postcontent" class="control-label">POST内容</label><span id="cm_postcontent_tip"></span>
+                      <textarea id="cm_postcontent" class="form-control" rows="2" placeholder="示例:channel=sports&type=football"></textarea>
+                  </div>
+                  <div class="form-group" id="div_response">
+                      <label for="cm_response" class="control-label">响应内容</label><span id="cm_response_tip"></span>
+                        <textarea id="cm_response" class="form-control" rows="2" placeholder="响应内容"></textarea>
+                  </div>
+
+                  <div class="form-group" id="div_match">
+                      <label for="cm_match" class="control-label">匹配方式</label><span id="cm_match_tip"></span>
+                      <div class="radio">
+                          <label><input type="radio" name="cm_match" value="true" aria-hidden="true" checked ="checked">匹配响应内容</label>
+                          <br/>
+                            <label><input type="radio" name="cm_match" value="false" aria-hidden="true">不匹配响应内容</label>
+                          <br/>
+                            <label><input type="radio" name="cm_match" value="ignore" aria-hidden="true">不关心</label>
+                      </div>
+                  </div>
+
+                  <div class="form-group">
+                      <label for="cm_cookie" class="control-label">cookie</label><span id="cm_cookie_tip"></span>
+                      <textarea id="cm_cookie" class="form-control" rows="2" placeholder="示例:token=d906b69209d9de92789fcd65a1a5d210; flv=10.0"></textarea>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" onclick="inputHttpCollectModel('{{ g.user }}')">确定</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">取消</button>
+      </div>
+    </div>
+  </div>
+  </div>
+</div>
+
+{% endif %}
+

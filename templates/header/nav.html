@@ -1,0 +1,197 @@
+{% block css %}
+<link href="/static/css/nav.css" rel="stylesheet">
+{% endblock %}
+{% block main %}
+<div class="head-v3">
+
+	<div class="navigation-up">
+
+		<div class="navigation-inner">
+
+			<div class="navigation-v3">
+				<ul>
+					<li class="{% if m_type == 'hp' %}nav-up-selected-inpage{% endif %}" _t_nav="home">
+						<h2>
+							<a href="/" target="_blank">首页</a>
+						</h2>
+					</li>
+                    <li class="{% if m_type == 'corp_register' %}nav-up-selected-inpage{% endif %}" _t_nav="corp_register">
+						<h2>
+							<a href="/details/corp_register" target="_blank" class="active">公司注册</a>
+						</h2>
+					</li>
+					<li class="{% if m_type == 'ftz_corp_register' %}nav-up-selected-inpage{% endif %}" _t_nav="ftz_corp_register">
+						<h2>
+							<a href="/details/ftz_corp_register" target="_blank">自贸区公司注册</a>
+						</h2>
+					</li>
+					<li class="{% if m_type == 'crop_trans' %}nav-up-selected-inpage{% endif %}" _t_nav="crop_trans">
+						<h2>
+							<a href="/details/crop_trans" target="_blank">公司转让</a>
+						</h2>
+					</li>
+					<li class="{% if m_type == 'verification' %}nav-up-selected-inpage{% endif %}" _t_nav="verification">
+						<h2>
+							<a href="/details/verification" target="_blank">增资验资 </a>
+						</h2>
+					</li>
+					<li class="{% if m_type == 'filing' %}nav-up-selected-inpage{% endif %}" _t_nav="filing">
+						<h2>
+							<a href="/details/filing" target="_blank">私募基金备案</a>
+						</h2>
+					</li>
+                    <li class="{% if m_type == 'approval' %}nav-up-selected-inpage{% endif %}" _t_nav="approval">
+						<h2>
+							<a href="/details/approval" target="_blank">公司资质审批</a>
+						</h2>
+					</li>
+                    <li class="{% if m_type == 'trade_register' %}nav-up-selected-inpage{% endif %}" _t_nav="trade_register">
+						<h2>
+							<a href="/details/trade_register" target="_blank">商标注册</a>
+						</h2>
+					</li>
+                    <li class="{% if m_type == 'bookkeeping' %}nav-up-selected-inpage{% endif %}" _t_nav="bookkeeping">
+						<h2>
+							<a href="/details/bookkeeping" target="_blank">代理记账</a>
+						</h2>
+					</li>
+                    <li class="{% if m_type == 'deep_baitong' %}nav-up-selected-inpage{% endif %}" _t_nav="deep_baitong">
+						<h2>
+							<a href="#" target="_blank">走进百统</a>
+						</h2>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+	<div class="navigation-down">
+
+		<div id="corp_register" class="nav-down-menu menu-1" style="display: none;" _t_nav="corp_register">
+			<div class="col-md-12 col-sm-12 col-xs-12">
+                {% set content1 = "集团公司搭建 融资租赁公司注册 商业保理公司注册  股权投资基金公司注册
+                  股权投资基金管理公司注册  电子科技公司注册  信息技术公司注册  实业公司注册  贸易公司注册
+                    文化传播公司注册  建筑工程公司注册  新能源科技公司注册   商务信息咨询公司注册
+                      企业管理咨询公司注册 小额贷款公司注册    典当公司注册   拍卖公司注册" | content_parse %}
+
+                {% for i in content1 %}
+                <div class="col-md-2 col-sm-4 col-xs-6">
+                    <a class="link form-control " href="{{ content1[i] }}" style="margin:5px">{{ i }}</a>
+				</div>
+                {% endfor %}
+			</div>
+		</div>
+
+		<div id="ftz_corp_register" class="nav-down-menu menu-3 menu-1" style="display: none;" _t_nav="ftz_corp_register">
+			<div class="col-md-12 col-sm-12 col-xs-12">
+                {% set content1 = "外高桥自贸区注册   陆家嘴自贸区注册   张江自贸区注册  金桥自贸区注册
+                   世博园自贸区注册" | content_parse %}
+
+                {% for i in content1 %}
+                <div class="col-md-2 col-sm-4 col-xs-6">
+                    <a class="link form-control " href="{{ content1[i] }}" style="margin:5px">{{ i }}</a>
+				</div>
+                {% endfor %}
+			</div>
+		</div>
+
+		<div id="crop_trans" class="nav-down-menu menu-3 menu-1" style="display: none;" _t_nav="crop_trans">
+
+			<div class="col-md-12 col-sm-12 col-xs-12">
+                {% set content1 = "股权投资基金公司转让    股权投资基金管理公司转让  融资租赁公司转让   商业保理公司转让
+                     互联网金融信息服务公司转让    金融信息服务公司转让    资产管理公司转让   投资管理公司转让 投资咨询公司转让
+                      投资公司转让     财富管理公司转让    资本管理公司转让    典当公司转让  汽车租赁公司转让
+                      电子科技公司转让    实业贸易公司转让    房地产经纪公司转让    化妆品公司转让
+                      商务信息咨询公司转让   其它公司转让" | content_parse %}
+
+                {% for i in content1 %}
+                <div class="col-md-2 col-sm-4 col-xs-6">
+                    <a class="link form-control " href="{{ content1[i] }}" style="margin:5px">{{ i }}</a>
+				</div>
+                {% endfor %}
+			</div>
+
+		</div>
+
+		<div id="verification" class="nav-down-menu menu-3 menu-1" style="display: none;" _t_nav="verification">
+
+			<div class="col-md-12 col-xs-12">
+                {% set content1 = "人民币验资   美元验资   大额验资   验资报告  企业资信证明   个人资信证明
+                  代打流水单 " | content_parse %}
+
+                {% for i in content1 %}
+                <div class="col-md-2 col-sm-4 col-xs-6">
+                    <a class="link form-control " href="{{ content1[i] }}" style="margin:5px">{{ i }}</a>
+				</div>
+                {% endfor %}
+			</div>
+
+		</div>
+
+		<div id="filing" class="nav-down-menu menu-3 menu-1" style="display: none;" _t_nav="filing">
+
+			<div class="col-md-12 col-xs-12">
+                {% set content1 = "证劵投资基金管理人备案    股权投资基金管理人备案   创业投资基金管理人备案
+                   私募基金产品备案" | content_parse %}
+
+                {% for i in content1 %}
+                <div class="col-md-2 col-sm-4 col-xs-6">
+                    <a class="link form-control " href="{{ content1[i] }}" style="margin:5px">{{ i }}</a>
+				</div>
+                {% endfor %}
+			</div>
+
+		</div>
+
+		<div id="approval" class="nav-down-menu menu-3 menu-1" style="display: none;" _t_nav="approval">
+
+			<div class="col-md-12 col-xs-12">
+                {% set content1 = "食品流通许可证办理     酒类批发许可证办理   进出口权申请  劳务派遣许可证办理
+                  建筑资质办理 人力资源经营许可证办理    道路运输许可证办理  ICP增值电信业务许可证办理
+                   危险化学品许可证办理 餐饮经营许可证办理 广播电视节目许可证 " | content_parse %}
+
+                {% for i in content1 %}
+                <div class="col-md-2 col-sm-4 col-xs-6">
+                    <a class="link form-control " href="{{ content1[i] }}" style="margin:5px">{{ i }}</a>
+				</div>
+                {% endfor %}
+			</div>
+
+		</div>
+		<div id="trade_register" class="nav-down-menu menu-3 menu-1" style="display: none;" _t_nav="trade_register">
+
+			<div class="col-md-12 col-xs-12">
+                {% set content1 = "商标注册流程     商标注册类别    商标注册申请须知
+                   商标转让     商标注册常见问题" | content_parse %}
+
+                {% for i in content1 %}
+                <div class="col-md-2 col-sm-4 col-xs-6">
+                    <a class="link form-control " href="{{ content1[i] }}" style="margin:5px">{{ i }}</a>
+				</div>
+                {% endfor %}
+			</div>
+
+		</div>
+		<div id="bookkeeping" class="nav-down-menu menu-3 menu-1" style="display: none;" _t_nav="bookkeeping">
+
+			<div class="col-md-12 col-xs-12">
+                {% set content1 = "代理记账收费标准   代理记帐资料流程  税控器托管费用须知   上市审计
+                  财务咨询    纳税筹划" | content_parse %}
+
+                {% for i in content1 %}
+                <div class="col-md-2 col-sm-4 col-xs-6">
+                    <a class="link form-control " href="{{ content1[i] }}" style="margin:5px">{{ i }}</a>
+				</div>
+                {% endfor %}
+			</div>
+
+		</div>
+
+	</div>
+
+</div>
+{% endblock %}
+{% block js %}
+<script src="/static/js/jquery.js"></script>
+<script  src="/static/js/header.js"></script>
+{% endblock %}

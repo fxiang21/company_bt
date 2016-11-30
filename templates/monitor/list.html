@@ -1,0 +1,65 @@
+{% set isadm = g.user | is_admin %}
+<link rel="stylesheet" href="{{ url_for('static',filename='plugins/sweetalert/sweetalert.css') }}">
+<div class="box" style="min-height: 640px">
+      <div class="box-header">
+      <h3 class="box-title">网站监控 【当前共添加了 <span>{{ total_number }}</span> 个网站监控】</h3>
+    </div>
+    <div class="box-body table-responsive no-padding">
+      <table class="table table-striped">
+        <tr>
+            <th>监控对象</th>
+            <th>监控名称</th>
+            <th>监控类型</th>
+{#                <th>检测频率</th>#}
+            <th>响应时间</th>
+            <th>监测点状态</th>
+            {% if isadm %}
+            <th>创建者</th>
+            {% endif %}
+          <th></th>
+        </tr>
+          {% for item in res %}
+          <tr>
+            <td><a class="texthide" href="{{ url_for('monitor.detail_info',_id=item.mt_id) }}" >{{ item['target'] }}</a></td>
+            <td>{{ item['name'] }}</td>
+            <td>{{ item['monitor_type'] }}</td>
+            <td>{{ item['msec_avg'] }}ms</td>
+            <td>
+                {% set ok = (100 * item['alive']/((item['alive'],item['dead']) | sum)) | int %}
+                {% set fail = 100-ok %}
+                <div class="progress">
+                  <div class="progress-bar progress-bar-success progress-bar-striped active"
+                       style="width: {{ ok }}%">{{ item['alive'] }}
+                  </div>
+                  <div class="progress-bar progress-bar-danger progress-bar-striped"
+                       style="width: {{ fail }}%">{{ item['dead'] }}
+                  </div>
+                </div>
+            </td>
+            {% if isadm %}
+            <td>{{ item.creator }}</td>
+            {% endif %}
+              <td style="width:200px">
+                  <a href="{{ url_for('monitor.detail_info',_id=item.mt_id) }}" class="btn btn-xs btn-info">详情</a>
+              {% if g.user.username == item.creator %}
+                  <a href="{{ url_for('monitor.targets_action', _id=item.mt_id) }}" class="btn btn-xs btn-success">编辑</a>
+              {% endif %}
+                  {% if item.enabled %}
+                  <button class="btn btn-xs btn-default"
+                          onclick="stopTarget('{{ item.mt_id }}', 'stop')"> 暂停</button>
+                  {% else %}
+                  <button class="btn btn-xs btn-default"
+                          onclick="stopTarget('{{ item.mt_id }}', 'start')"> 开启</button>
+                  {% endif %}
+                  <button class="btn btn-xs btn-danger"
+                          onclick="deleteTarget('{{ item.mt_id }}')"> 删除</button>
+              </td>
+          </tr>
+          {% endfor %}
+      </table>
+    <div class="box-footer no-padding">
+        {% include "page.html" %}
+    </div>
+    </div><!-- /.box-body -->
+    </div>
+{#<script src="{{ url_for('static', filename='plugins/sweetalert/sweetalert.min.js')}}"></script>#}

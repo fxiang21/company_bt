@@ -1,0 +1,138 @@
+<link href="{{ url_for('static', filename='plugins/magicsuggest/magicsuggest-min.css') }}" rel="stylesheet" type="text/css">
+<link href="{{ url_for('static', filename='plugins/multi-select/css/multi-select.css')}}" media="screen" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="{{ url_for('static', filename='plugins/sweetalert/sweetalert.css')}}">
+    <style>
+        .custom-header {
+            text-align: center;
+            padding: 3px;
+            background: #00a65a;
+            color: #fff;
+        }
+        .search-input {
+            /*box-sizing: border-box;*/
+            /*-moz-box-sizing: border-box;*/
+            /**/
+            /*height: auto;*/
+            width: 100%;
+        }
+    </style>
+<div class="box box-primary" style="min-height: 640px">
+    <div class="box-header with-border">
+      <h3 class="box-title">用户组管理</h3>
+    </div><!-- /.box-header -->
+    <div class="box-body no-padding">
+            <table id="team_list" class="table table-striped">
+            <tr><th>组名称</th><th>创建者</th><th>创建时间</th><th></th></tr>
+            {% for i in teams %}
+                <tr>
+                    <td>{{ i.name }}</td>
+                    <td>{{ i.creator }}</td>
+                    <td>{{ i.created }}</td>
+                    <td style="width:200px">
+                      <button class="btn btn-xs btn-info" onclick="team_users('{{ i.tid }}')">用户</button>
+                      <button class="btn btn-xs btn-success"
+                              onclick="UpdateTeamModal('{{ i.tid }}', 'update_team_modal', '{{ i.name }}')">编辑</button>
+                      <button class="btn btn-xs btn-danger"
+                              onclick="deleteTarget('{{ item.mt_id }}')" disabled> 删除</button>
+                    </td>
+                </tr>
+            {% endfor %}
+            </table>
+    </div><!-- /.box-body -->
+    <div class="box-footer no-padding">
+            {% include "page.html" %}
+        </div>
+</div>
+
+<div class="modal fade" id="add_team_modal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 id="modal_mail_con_add_title" class="modal-title">添加用户组</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-horizontal">
+                  <div class="box-body">
+                      <div class="form-group">
+                        <label for="new_team_name" class="control-label">组名称:</label><span id="new_team_name_tip"></span>
+                        <input id="new_team_name" name="mt_name" type="text" class="form-control">
+                      </div>
+                    <div class="form-group">
+                        <label for="user_team_rel" class="control-label">关联报警联系人</label>
+                        <select multiple="multiple" id="user_team_rel" name="my-select[]"></select>
+                    </div>
+                  </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <span id="mails_filter_config_tips"></span>
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" onclick="AddUserTeam()">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="update_team_modal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 id="modal_mail_con_add_title" class="modal-title">修改用户组</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-horizontal">
+                  <div class="box-body">
+                      <div class="form-group">
+                        <input id="team_id" name="team_id" value="" type="text" style="display: none" readonly>
+                      </div>
+                      <div class="form-group">
+                        <label for="update_team_name" class="control-label">组名称:</label><span id="update_team_name_tip"></span>
+                        <input id="update_team_name" name="team_name" type="text" class="form-control">
+                      </div>
+                    <div class="form-group">
+                        <label for="user_team_rel_update" class="control-label">关联报警联系人</label>
+                        <select multiple="multiple" id="user_team_rel_update" name="my-select[]"></select>
+                    </div>
+                  </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <span id="mails_filter_config_tips"></span>
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" onclick="UpdateUserTeam()">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="team_users" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 id="modal_mail_con_add_title" class="modal-title">用户组成员详情</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-horizontal">
+                  <div class="box-body">
+                      <div class="col-md-12 table-responsive no-padding table-bordered">
+                        <table id="team_user_list" class="table table-striped">
+                        </table>
+                      </div>
+                  </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <span id="mails_filter_config_tips"></span>
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='plugins/jquery/jquery-2.1.4.min.js')}}"></script>
+<script src="{{ url_for('static', filename='plugins/sweetalert/sweetalert.min.js')}}"></script>
+<script src="{{ url_for('static', filename='plugins/select2/select2.full.min.js')}}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='plugins/jquery/jquery.quicksearch.min.js')}}"></script>

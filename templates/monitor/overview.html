@@ -1,0 +1,344 @@
+<link rel="stylesheet" href="{{ url_for('static', filename='plugins/datatables/dataTables.bootstrap.css') }}" >
+<style>
+    td{
+        white-space:nowrap;
+    }
+    small{
+        padding: 0.1em !important;
+    }
+</style>
+<div class="box" >
+      <div class="box-header">
+      <h3 class="box-title">网站监控详情</h3>
+          <button class="pull-right btn btn-sm btn-primary" onclick="window.history.go(-1)">返回</button>
+    </div>
+    <div class="box-body table-responsive no-padding">
+        <div class="box col-md-6 col-xs-12" style="width: 50%">
+              <div class="box-header"><h3 class="box-title">基本信息</h3></div>
+                <div class="box-body">
+                    <table>
+                        <tr>
+                            <td style="word-break: normal">监控名称:&nbsp;</td>
+                            <td>{{ res.name }}</td>
+                        </tr>
+                        <tr>
+                            <td>监控对象:&nbsp;</td>
+                            <td><a class="texthide show-pop" data-placement="auto-top">{{ res.target }}</a></td>
+                        </tr>
+                        <tr>
+                            <td>监控类型:&nbsp;</td>
+                            <td>{{ res.monitor_type }}</td>
+                        </tr>
+                    </table>
+{#                    <label>监控名称:&nbsp;</label><span>{{ res.name }}</span><br>#}
+{#                    <label style="float: left;">监控对象:&nbsp;</label>#}
+{#                        <a class="texthide show-pop" data-placement="auto-top">{{ res.target }}</a><br>#}
+{#                    <label>监控类型:&nbsp;</label><span>{{ res.monitor_type }}</span>#}
+                </div>
+        </div>
+        <div class="box col-md-6 col-xs-12" style="width: 50%">
+            <div class="box-header"><h3 class="box-title">监控信息</h3></div>
+            <div class="box-body">
+                    <table>
+                        <tr>
+                            <td>监控模板:&nbsp;</td>
+                            <td><a class="texthide top-show" data-placement="left-bottom">{{ cm.name }}</a></td>
+                        </tr>
+                        <tr>
+                            <td>告警模板:&nbsp;</td>
+                            <td><a class="texthide right-show" data-placement="left-bottom">{{ atpl.name }}</a></td>
+                        </tr>
+                        <tr>
+                            <td>告警接收组:&nbsp;</td>
+                            <td>
+                                {% for grp in groups %}
+                                    <a class="texthide show-pop" data-placement="auto-bottom">
+                                    <small class="label bg-green">{{ grp.name }}</small></a>
+                                {% endfor %}
+                            </td>
+                        </tr>
+                    </table>
+            </div>
+
+        </div>
+        <div class="box col-md-8 col-xs-12">
+              <div class="box-header">
+              <h3 class="box-title">站点实时动态</h3>
+              </div>
+            <div class="box-body col-md-12">
+                <div class="col-md-6 col-xs-12">
+                    <div id="map" style="width: 500px;height:400px;"></div>
+                </div>
+                <div class="col-md-6 table-responsive no-padding table-bordered col-md-6 col-xs-12">
+                      <table id="detail_list" class="table table-striped">
+                      </table>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="box col-md-8 col-xs-12">
+            <div class="box-header">
+                <h3 class="box-title">24小时可用情况</h3>
+            </div>
+            <div class="box-body col-md-12" >
+                <div id="detailBar">
+
+                </div>
+            </div>
+            <div class="box-body col-md-12">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript" src="{{ url_for('static', filename='plugins/jquery/jquery-2.1.4.min.js') }}" ></script>
+<script src="{{ url_for('static', filename='plugins/echarts/echarts.min.js')}}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='plugins/echarts/map/js/china.js')}}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='plugins/echarts/map/js/world.js')}}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/monitor.js')}}"></script>
+
+{#24小时可用汇总表#}
+<script type="text/javascript">
+
+</script>
+
+{#24小时可用详细#}
+<script type="text/javascript">
+
+</script>
+
+{#站点实时地图动态#}
+<script type="text/javascript">
+var myChart = echarts.init(document.getElementById('map'));
+var option = {
+    title: {
+        text: '站点实时动态',
+        left: 'center'
+    },
+    tooltip: {
+        trigger: 'item'
+    },
+    visualMap: [
+
+        {
+            inRange: {
+                color: ['green', 'yellow','red'],
+
+                symbolSize: [100, 100]
+            },
+            //categories:['-1'],
+            min: 0,
+            max: 2500,
+            splitNumber:5,
+            left: 'left',
+            top: 'bottom',
+            textcolor:'#000',
+            text: ['差','优'],           // 文本，默认为数值文本
+            calculable: true
+        }
+    ],
+    series: []
+};
+
+var station_map = {
+    'shdx':['上海电信','上海'],
+    'shdx2':['上海电信2','上海'],
+    'shzpdx':['上海周浦电信','上海'],
+    'gzuc_bgp':['广州ucloud_BGP','广州'],
+    'bjuc_bgp':['北京ucloud_BGP','北京'],
+    'shuc_bgp':['上海ucloud_BGP','上海']
+};
+
+var tables_result = {};
+function tidyData(res){
+    var series_c = {
+        type: 'map',
+        mapType: 'china',
+        label: {
+            normal: {show: false},
+            emphasis: {show: true}
+        },
+        selectedMode: 'single'
+    };
+    var tmp = {};
+    for(var i in res){
+        var data = [];
+        var keys = res[i].columns;
+        var values = res[i].values;
+        var s_index = keys.indexOf('station');
+        var v_index = keys.indexOf('value');
+        var t_index = keys.indexOf('time');
+        if(res[i]['name'].match(/[\w]*__icmp_ping_msec$|[\w]*__net_http_msec$/g)){
+            series_c.name ='RRT';
+            for(var j in values){
+                if(tmp[values[j][s_index]] == undefined){
+                    tmp[values[j][s_index]] = [values[j][v_index], 1];
+                }else{
+                    var n = tmp[values[j][s_index]][1] + 1;
+                    tmp[values[j][s_index]].push([values[j][v_index] + tmp[values[j][s_index]][0], n]);
+                }
+
+                if(tables_result[station_map[values[j][s_index]][0]] == undefined){
+                    tables_result[station_map[values[j][s_index]][0]] = {};
+                }
+                tables_result[station_map[values[j][s_index]][0]].msec = values[j][v_index]
+            }
+        }else if(res[i]['name'].match(/[\w]*__icmp_ping_loss$/g)){
+            for(var j in values){
+                if(tables_result[station_map[values[j][s_index]][0]] == undefined){
+                    tables_result[station_map[values[j][s_index]][0]] = {};
+                }
+                tables_result[station_map[values[j][s_index]][0]].loss = values[j][v_index]
+            }
+        }else if(res[i]['name'].match(/[\w]*__icmp_ping_alive$|[\w]*__net_http_alive$/g)){
+            for(var j in values){
+                if(tables_result[station_map[values[j][s_index]][0]] == undefined){
+                    tables_result[station_map[values[j][s_index]][0]] = {};
+                }
+                tables_result[station_map[values[j][s_index]][0]].alive = values[j][v_index]
+            }
+        }else if(res[i]['name'].match(/[\w]*__net_http_ip$/g)){
+            for(var j in values){
+                if(tables_result[station_map[values[j][s_index]][0]] == undefined){
+                    tables_result[station_map[values[j][s_index]][0]] = {};
+                }
+                tables_result[station_map[values[j][s_index]][0]].ip = values[j][v_index]
+            }
+        }else if(res[i]['name'].match(/[\w]*__net_http_code$/g)){
+            for(var j in values){
+                if(tables_result[station_map[values[j][s_index]][0]] == undefined){
+                    tables_result[station_map[values[j][s_index]][0]] = {};
+                }
+                tables_result[station_map[values[j][s_index]][0]].code = values[j][v_index]
+            }
+        }
+    }
+    for(var j in tmp){
+        data.push({name:station_map[j][1],value:(tmp[j][0] / tmp[j][1]).toFixed(2)});
+        series_c.data = data;
+        option.series.push(series_c);
+    }
+}
+
+$(function(){
+    $.post( $SCRIPT_ROOT + '/monitor/detail/mapinfo',
+            {
+                name:'{{ res.name }}',
+                target:htmldecode('{{ res.target }}'),
+                mtype:'{{ res.monitor_type }}',
+                method:'{{ res.request_method}}'
+            },function(resp){
+                var res=JSON.parse(resp);
+                tidyData(res['results'][0]['series']);
+                myChart.setOption(option);
+                document.getElementById('detail_list').innerHTML = buildHtml('{{ res.monitor_type }}', tables_result);
+            }
+    );
+    myChart.on('click', function (params) {
+        var city = params.name;
+    });
+    initShowTips();
+    cmTips('a.top-show','{{ res.cm_id }}', '{{ res.monitor_type }}');
+    alarmTips('a.right-show', '{{ res.at_id }}');
+
+});
+
+    $(function () {
+        var name = '{{ res.name }}';
+        data = {
+            mtype:'{{ res.monitor_type }}',
+            target:htmldecode('{{ res.target }}'),
+            stations:'{{ res.stations }}'
+        };
+        $.get($SCRIPT_ROOT + '/monitor/detail/24hourinfo/' + name,data,function (resp) {
+            //$('#detailBar').html(resp);
+            //console.log(resp);
+            var data = JSON.parse(resp);
+            var table_station = document.createElement('table');
+            var attr_class_of_table = document.createAttribute('class');
+            attr_class_of_table.value = 'table table-striped';
+            table_station.setAttributeNode(attr_class_of_table);
+
+            var table_body_station = document.createElement('tbody');
+            table_station.appendChild(table_body_station);
+
+            var element = document.getElementById('detailBar');
+            element.appendChild(table_station);
+
+            for (var i in data){
+                //站点div
+{#                var div_node = document.createElement("div");#}
+{#                var attr_id = document.createAttribute('id');#}
+{#                attr_id.value = "station_" + i;#}
+{#                div_node.setAttributeNode(attr_id);#}
+{#                //div_node.attr('id',"station_" + i);#}
+{#                var element = document.getElementById('detailBar');#}
+{#                element.appendChild(div_node);#}
+
+                var tr_node = document.createElement('tr');
+                table_body_station.appendChild(tr_node);
+
+                var td1_node = document.createElement('td');
+                td1_node.innerHTML=station_map[i][0];
+                var attr_style_td1 = document.createAttribute('style');
+                attr_style_td1.value = 'width:80px;';
+                td1_node.setAttributeNode(attr_style_td1);
+                tr_node.appendChild(td1_node);
+                var td2_node = document.createElement('td');
+                tr_node.appendChild(td2_node);
+
+
+                //站点名称div
+                var name_node = document.createElement('div');
+                attr_class_of_name = document.createAttribute('class');
+                attr_class_of_name.value = "col-md-2 col-xs-12";
+                name_node.setAttributeNode(attr_class_of_name);
+                name_node.innerHTML=station_map[i][0];
+                //div_node.appendChild(name_node);
+                //td1_node.appendChild(name_node);
+                //站点24小时状态div
+                var content_node = document.createElement('div');
+                var attr_class_of_content = document.createAttribute('class');
+                attr_class_of_content.value = 'progress';
+                content_node.setAttributeNode(attr_class_of_content);
+
+                var attr_style_of_content = document.createAttribute('style');
+                attr_style_of_content.value = 'padding: 0px;';
+                content_node.setAttributeNode(attr_style_of_content);
+                //div_node.appendChild(content_node);
+                td2_node.appendChild(content_node);
+
+                //设定状态(进度条)
+                for ( j in data[i]){
+                    var progress_bar_node = document.createElement('div');
+                    if(data[i][j][1] == 1){
+                        var attr_class_success = document.createAttribute('class');
+                        attr_class_success.value = ('progress-bar progress-bar-success progress-bar-striped');
+                        progress_bar_node.setAttributeNode(attr_class_success);
+                    }else if(data[i][j][1] == 0){
+                        var attr_calss_warning = document.createAttribute('class');
+                        attr_calss_warning.value = ('progress-bar progress-bar-warning progress-bar-striped');
+                        progress_bar_node.setAttributeNode(attr_calss_warning);
+                    }
+                    attr_style = document.createAttribute('style');
+                    attr_style.value = 'width:' + data[i][j][0] * 100 + '%';
+                    progress_bar_node.setAttributeNode(attr_style);
+                    content_node.appendChild(progress_bar_node);
+                }
+
+{#                $('#detailBar').html($('#detailBar').html() + "<div id = ' station_" + i +  "' >" + station_map[i][0] + "</div>");#}
+{#                $('#detailBar').html($('#detailBar').html() + "<div id = ' station_data_" + i +  "' ></div>");#}
+{#                for( j in i){#}
+{##}
+{#                }#}
+               //$('#detailBar').html(i + '==' + data[i]);
+            }
+            //console.log(resp);
+            //console.log(data);
+
+        });
+    })
+</script>

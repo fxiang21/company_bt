@@ -1,0 +1,131 @@
+<link rel="stylesheet" href="{{ url_for('static', filename='plugins/sweetalert/sweetalert.css') }}">
+<div class="box box-primary" style="min-height: 640px">
+    <div class="box-header with-border">
+      <h3 class="box-title">监控模版管理</h3>
+      <button class="pull-right btn btn-sm btn-warning" onclick="window.history.go(-1)">返回</button>
+    </div><!-- /.box-header -->
+    <div class="box-body no-padding">
+            <table id="team_list" class="table table-striped table-bordered">
+            <tr><th>HTTP模版名称</th>
+                <th>HTTP间隔</th>
+                <th>HTTP请求方法</th>
+                <th hidden="true">POST内容</th>
+                <th hidden="true">响应内容</th>
+                <th>匹配方式</th>
+                <th hidden="true">cookie</th>
+                <th>创建者</th>
+                <th></th></tr>
+            {% for i in templates %}
+                <tr id="chm_{{ i.chm_id }}">
+                    <td class="allow">{{ i.name }}</td>
+                    <td class="allow">{{ i.interval }}</td>
+                    <td class="allow">{{ i.method }}</td>
+                    <td class="allow" hidden="true">{{ i.postcontent }}</td>
+                    <td class="allow" hidden="true">{{ i.response }}</td>
+                    <td class="allow">{{ i.match }}</td>
+                    <td class="allow" hidden="true">{{ i.cookie }}</td>
+                    <td>{{ i.creator }}</td>
+                    <td style="width:200px">
+                        <button class="btn btn-xs btn-primary" data-toggle="modal" data-target="#add_template_http_modal"
+                                onclick="http_template_change(this,'{{ i.chm_id }}')">修改</button>
+                        <button class="btn btn-xs btn-danger"
+                              onclick="deleteTarget('{{ item.chm_id }}')" disabled> 删除</button>
+                    </td>
+                </tr>
+            {% endfor %}
+            </table>
+    </div><!-- /.box-body -->
+    <div class="box-footer no-padding">
+            {% include "page.html" %}
+    </div>
+</div>
+
+
+<div class="modal fade" id="add_template_http_modal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 id="modal_mail_con_add_title" class="modal-title">添加HTTP监控模版</h4><span id="chm_id" hidden='true'></span>
+            </div>
+            <div class="modal-body">
+          <div class="form-horizontal">
+              <form class="box-body" id="add_template_form">
+                  <div class="form-group">
+                    <label for="cm_type" class="control-label">模板类型:</label>
+                    <input id="cm_type" type="text" name="cm_type" class="form-control" value="HTTP" readonly>
+                  </div>
+                  <div class="form-group">
+                    <label for="cm_name" class="control-label">模板名称:</label><span id="cm_name_tip"></span>
+                    <input id="cm_name" type="text" name="cm_name" class="form-control">
+                  </div>
+
+
+                  <div class="form-group">
+                    <label for="cm_interval">采集频率</label>
+                    <select id="cm_interval" name="cm_interval" class="form-control"style="width: 100%;" tabindex="-1" aria-hidden="true">
+                        <option value="30"> 30秒</option>
+                        <option value="60"> 1分钟</option>
+                        <option value="300"> 5分钟</option>
+                        <option value="600">10分钟</option>
+                        <option value="3600">60分钟</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group">
+                      <label for="cm_method" class="control-label">HTTP请求方法</label><span id="cm_method_tip"></span>
+                      <div class="radio">
+                        <label><input type="radio" name="cm_method" value="get" checked="checked">GET</label>
+                          <br/>
+                        <label><input type="radio" name="cm_method" value="post">POST</label>
+                          <br/>
+                        <label><input type="radio" name="cm_method" value="head">HEAD</label>
+                      </div>
+                  </div>
+
+                  <div class="form-group" id="div_postcontent">
+                      <label for="cm_postcontent" class="control-label">POST内容</label><span id="cm_postcontent_tip"></span>
+                      <textarea id="cm_postcontent" class="form-control" rows="2" placeholder="示例:channel=sports&type=football"></textarea>
+                  </div>
+                  <div class="form-group" id="div_response">
+                      <label for="cm_response" class="control-label">响应内容</label><span id="cm_response_tip"></span>
+                        <textarea id="cm_response" class="form-control" rows="2" placeholder="响应内容"></textarea>
+                  </div>
+
+                  <div class="form-group" id="div_match">
+                      <label for="cm_match" class="control-label">匹配方式</label><span id="cm_match_tip"></span>
+                      <div class="radio">
+                          <label><input type="radio" name="cm_match" value="true" aria-hidden="true" checked ="checked">匹配响应内容</label>
+                          <br/>
+                            <label><input type="radio" name="cm_match" value="false" aria-hidden="true">不匹配响应内容</label>
+                          <br/>
+                            <label><input type="radio" name="cm_match" value="ignore" aria-hidden="true">不关心</label>
+                      </div>
+                  </div>
+
+                  <div class="form-group">
+                      <label for="cm_cookie" class="control-label">cookie</label><span id="cm_cookie_tip"></span>
+                      <textarea id="cm_cookie" class="form-control" rows="2" placeholder="示例:token=d906b69209d9de92789fcd65a1a5d210; flv=10.0"></textarea>
+                  </div>
+
+              </form>
+          </div>
+      </div>
+            <div class="modal-footer">
+                <span id="mails_filter_config_tips"></span>
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" id="add_button" onclick="http_template_add('{{ g.user }}')">确定</button>
+                <button type="button" class="btn btn-primary" id="save_button" onclick="http_template_save('{{ g.user }}')">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+<script src="{{ url_for('static', filename='plugins/jquery/jquery-2.1.4.min.js') }}"></script>
+<script src="{{ url_for('static', filename='plugins/sweetalert/sweetalert.min.js') }}"></script>

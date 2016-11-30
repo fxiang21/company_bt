@@ -1,0 +1,278 @@
+<link href="{{ url_for('static', filename='plugins/magicsuggest/magicsuggest-min.css') }}" rel="stylesheet" type="text/css">
+{#<link href="../../static/plugins/select2/select2.min.css" rel="stylesheet" type="text/css">#}
+<link rel="stylesheet" href="{{ url_for('static', filename='dist/css/AdminLTE.min.css') }}">
+<style>
+    input{
+        border-radius: 5px;
+    }
+</style>
+<section class="content">
+    <div class="box box-default">
+        <div class="box-header with-border">
+          <h3 class="box-title">{{ monitor_type }} 监控配置</h3>
+        </div><!-- /.box-header -->
+        <div class="box-body">
+          <div class="row">
+              <form class="col-md-6" onsubmit="return false;">
+                <div class="form-group">
+                    <label for="mt_name" class="control-label">监控名称:</label>
+                    <span id="mt_name_tip"></span>
+                    <input id="mt_name" name="name" type="text" class="form-control" placeholder="只支持字符、数字、下划线(32字符以内)">
+                </div>
+                <div class="form-group">
+                    <label for="mt_target" class="control-label">监控对象:</label>
+                    <span id="mt_target_tip"></span>
+                    <textarea id="mt_target" name="target" class="form-control" placeholder="多个监控对象之间换行(https请添加完整路径:https://..,默认http)" ></textarea>
+{#                      <input id="mt_target" name="target" type="text" class="form-control">#}
+                </div>
+                <div class="form-group">
+                    <label for="mt_stations">监控站点</label>
+                    <span id="mt_stations_tip"></span>
+                    <select id="mt_stations" name="stations" class="form-control select2" multiple="multiple" style="width: 100%;">
+                        {% for m in stations %}
+                            {% if m._id == 1 %}
+                            <option value="{{ m._id }}" selected>{{ m.name }}</option>
+                            {% else %}
+                            <option value="{{ m._id }}">{{ m.name }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="mt_cm_id">监控模板</label><span id="mt_tips" style="color:red"></span>
+                    <select id="mt_cm_id" name="cm_id"  class="form-control select2"
+                            style="width: 100%;" tabindex="-1" aria-hidden="true">
+                        <option value=-1>新建模板</option>
+                        {% for m in cms %}
+                            {% if m._id == 1 %}
+                            <option value="{{ m._id }}" selected>默认采集模板</option>
+                            {% else %}
+                            <option value="{{ m._id }}">{{ m.name }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="mt_at_id">告警模板</label>
+                    <span id="mt_at_id_tip"></span>
+                    <select id="mt_at_id" name="at_id" class="form-control select2"
+                            style="width: 100%;" tabindex="-1" aria-hidden="true">
+                        {% for m in ats %}
+                            <option value="{{ m._id }}">{{ m.name }}</option>
+                        {% endfor %}
+                            <option value=-1>新建模板</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="mt_note_group">告警接收组&nbsp;</label>
+                    <button class="btn btn-xs btn-success"
+                            onclick="newTeamModal('{{ g.user.username }}', 'add_team_modal')">新增</button>
+                    <select id="mt_note_group" name="note_group"  class="form-control select2" multiple="multiple" style="width: 100%;">
+                      {% for m in teams %}
+                            {% if m.name == '默认告警组' %}
+                            <option value="{{ m._id }}" selected>m.name</option>
+                            {% else %}
+                            <option value="{{ m._id }}">{{ m.name }}</option>
+                            {% endif %}
+                      {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group" hidden>
+                    <label for="mt_monitor_type" class="control-label">监控类型</label>
+                      <input id="mt_monitor_type" name="monitor_type" type="text" value={{ monitor_type }} class="form-control">
+                </div>
+                <div class="form-group" hidden>
+                    <label for="mt_request_method" class="control-label">请求方式</label>
+                      <input id="mt_request_method" name="request_method" type="text" value="PING" class="form-control">
+                </div>
+
+
+{#                <div class="form-group bootstrap-timepicker">#}
+{#                      <label>告警时间</label>#}
+{#                    <select id="alarm_begin" class="form-control">#}
+{#                        <option value='0'>0</option>#}
+{#                        {% for i in range(1,24) %}#}
+{#                            <option value="{{ i }}">{{ i }}</option>#}
+{#                        {% endfor %}#}
+{#                    </select>时至#}
+{#                    <select id="alarm_end">#}
+{#                        <option value='24'>0</option>#}
+{#                        {% for i in range() %}#}
+{#                            <option value="{{ i }}">{{ i }}</option>#}
+{#                        {% endfor %}#}
+{#                    </select>时#}
+{#                </div>#}
+
+              </form><!-- /.col -->
+              <div class="col-md-6">
+                  <div class="callout callout-default" style="margin-bottom: 5px">
+                      {% include "monitor/collect_model.html" %}
+                  </div>
+                  <div class="callout">
+                      {% include "monitor/alarm_model.html" %}
+                  </div>
+              </div>
+                <div>
+                    {% include "monitor/team.html" %}
+                </div>
+
+
+          </div><!-- /.row -->
+        </div><!-- /.box-body -->
+        <div class="box-footer">
+            <div align="middle">
+                <button class="btn btn-success" onclick="commitMonitor('POST')">提交</button>
+                <button class="btn btn-warning" onclick="window.history.go(-1)">返回</button>
+                <a  type="submit" ></a>
+            </div>
+        </div>
+  </div>
+    <div class="modal fade" id="add_monitor_tips" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 id="modal_mail_con_add_title" class="modal-title">添加监控提示
+                        <span style="font-family: Serif; color: rebeccapurple;">&emsp;5分钟以内生效</span>
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-horizontal">
+                      <div class="box-body">
+                          <div id="add_monitor_success" class="callout callout-success">
+                            <h4>成功添加监控对象:</h4>
+                            <p id="add_monitor_success_tip" style="word-wrap: break-word"></p>
+                          </div>
+                          <div id="add_monitor_fail" class="callout callout-warning" style="display: none;">
+                            <h4>添加以下监控对象失败:</h4>
+                            <p id="add_monitor_fail_tip"></p>
+                          </div>
+                          <div id="add_monitor_error" class="callout callout-danger" style="display: none;">
+                            <h4>服务器处理错误</h4>
+                            <p id="add_monitor_error_tip"></p>
+                          </div>
+                      </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script type="text/javascript" src="{{ url_for('static',filename='plugins/select2/select2.full.min.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static',filename='plugins/multi-select/js/jquery.multi-select.js')}}"></script>
+<script type="text/javascript" src="{{ url_for('static',filename='plugins/jquery/jquery.quicksearch.min.js')}}"></script>
+
+
+<script>
+
+    function set_collect_model_display(cs) {
+        if ('{{ monitor_type }}' == 'PING') {
+            var url = $SCRIPT_ROOT + '/monitor/cpm/details/' + cs;
+            $.get(url, {}, function (resp) {
+                var res = JSON.parse(resp);
+                $('#collect_interval').html(res.interval);
+            })
+        } else if ('{{ monitor_type == 'HTTP' }}') {
+            var url = $SCRIPT_ROOT + '/monitor/chm/details/' + cs;
+            $.get(url, {}, function (resp) {
+                var res = JSON.parse(resp);
+                $('#collect_interval').html(res.interval + '秒');
+                $('#collect_method').html(res.method);
+                $('#collect_postcontent').html(res.postcontent);
+                $('#collect_response').html(res.response);
+                $('#collect_match').html(res.match);
+                $('#collect_cookie').html(res.cookie);
+                $('#mt_request_method').val(res.method);
+            })
+        }
+    }
+
+
+    function set_alarm_model_display(cs) {
+        var url = $SCRIPT_ROOT + '/monitor/atpl/details/' + cs;
+            $.get(url,{},function(resp){
+                console.log(resp)
+                var res = JSON.parse(resp);
+                var tmp = res[0].strategy.split('||');
+                var r = {};
+                for(var i in tmp){
+                    var a = tmp[i].split(/[<>=]/);
+                    if(a.length == 2){
+                        r[a[0]] = a[1]
+                    }
+                }
+                for(var j in r){
+                    if(res[0].alarm_type == 'PING') {
+                        if (r.hasOwnProperty(j)) {
+                            if (j == 'icmp_ping_msec') {
+                                $('#at_tpl_msec').html(r.icmp_ping_msec);
+                            } else if (j == 'icmp_ping_loss') {
+                                $('#at_tpl_loss').html(r.icmp_ping_loss * 100 + "%");
+                            }
+                        }
+                    }else if (res[0].alarm_type == 'HTTP'){
+                        if(r.hasOwnProperty(j)){
+                            if (j == 'net_http_msec'){
+                                $('#at_tpl_msec').html(r.net_http_msec);
+                            }
+                        }
+                    }
+                }
+                $('#at_tpl_min_station_num').html(res[0].min_sta_num);
+                $('#at_tpl_min_continue_num').html(res[0].min_continue_num);
+                $('#at_tpl_max_alarm_num').html(res[0].max_alarm_num);
+            })
+    }
+
+    if('{{ monitor_type }}' == 'PING'){
+        set_alarm_model_display(1);
+        set_collect_model_display(1);
+    }else if('{{ monitor_type }}' == 'HTTP'){
+        set_alarm_model_display(2);
+        set_collect_model_display(1);
+    }
+
+
+
+$(function() {
+    $('.select2').select2();
+    $('#mt_cm_id').on('select2:select', function (evt) {
+        var cs = $(this).val();
+        if(cs == -1){
+            $("#mt_cm_id").select2('val', '1');
+            $('#collect_modal').modal('show');
+        }else{
+            set_collect_model_display(cs);
+        }
+    });
+    $('#mt_at_id').on('select2:select', function (evt) {
+        var cs = $(this).val();
+        if(cs == -1){
+            $("#mt_at_id").select2('val', '1');
+            $('#alarm_modal').modal('show');
+        }else{
+            set_alarm_model_display(cs) ;
+        }
+    });
+    $('#mt_note_group').on({
+        'select2:select select2:unselect': function(evt){
+            var current_team_ids = $('#mt_note_group').val();
+            if(!current_team_ids){
+                receiverShow([], 'receivers_info');
+                return;
+            }
+            $.get($SCRIPT_ROOT + '/config/team/users',
+                    {
+                        team_ids:JSON.stringify(current_team_ids)
+                    }, function(resp){
+                        receiverShow(resp.users, 'receivers_info');
+                    });
+            }
+    });
+});
+
+</script>

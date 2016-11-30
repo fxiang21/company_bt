@@ -1,0 +1,35 @@
+<div class="col-md-2">
+  <a href="{{ url_for('monitor.new_target', type=item1) }}" class="btn btn-primary btn-block margin-bottom">添加监控项</a>
+  <div class="box box-solid">
+    <div class="box-header with-border">
+      <h3 class="box-title">监控类型</h3>
+      <div class="box-tools">
+        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+      </div>
+    </div>
+    <div class="box-body no-padding">
+      <ul class="nav nav-pills nav-stacked">
+          <li {% if item1 == ''%}  class="active" {% endif %}>
+              <a href="{{ url_for('monitor.index_page') }}"><i class="fa fa-inbox"></i> 全部</a>
+          </li>
+          <li {% if item1 == 'PING'%}  class="active" {% endif %}>
+              <a href="{{ url_for('monitor.index_page',monitor_type='PING' ) }}"><i class="fa fa-file-text-o"></i> PING监控</a>
+          </li>
+          <li {% if item1 == 'HTTP'%}  class="active" {% endif %}>
+              <a href="{{ url_for('monitor.index_page',monitor_type='HTTP') }}"><i class="fa fa-file-text"></i> HTTP监控</a>
+          </li>
+          <li {% if item1 == 'DNS'%}  class="active" {% endif %}>
+              <a href="#"><i class="fa fa-filter"></i>DNS监控</a>
+          </li>
+{#          <li {% if item1 == 'HTTP'%}  class="active" {% endif %}>#}
+{#              <a href="{{ url_for('monitor.index_page',monitor_type='HTTP' ) }}"><i class="fa fa-file-text"></i> HTTP监控</a>#}
+{#          </li>#}
+{#          <li {% if item1 == 'DNS'%}  class="active" {% endif %}>#}
+{#              <a href="{{ url_for('monitor.index_page',monitor_type='DNS' ) }}"><i class="fa fa-filter"></i>DNS监控</a>#}
+{#          </li>#}
+      </ul>
+    </div>
+  </div>
+</div>
+
+

@@ -1,0 +1,51 @@
+{% extends "index.html" %}
+{% block main %}
+<div class="container projects">
+
+      <div class="center wow fadeInDown animated">
+{#        <h2>Bootstrap相关优质项目推荐</h2>#}
+{#        <p>这些项目或者是对Bootstrap进行了有益的补充，或者是基于Bootstrap开发的</p>#}
+      </div>
+
+    {% if m_type == "" %}
+    {% endif %}
+
+      <div class="row">
+{#      {% for item in items %}#}
+        <div class="col-sm-6 col-md-4 col-lg-3 child_item">
+          <div class="thumbnail" style="height: 336px;">
+            <a href="#" target="_blank">
+                <img class="lazy child_item" src="http://static.bootcss.com/www/assets/img/chart.js.png"></a>
+            <div class="caption">
+              <h3>
+                <a href="#/"target="_blank">Chart.js<br><small>精巧的JS图表绘制工具库</small></a>
+              </h3>
+              <p>
+              Chart.js是一个简单、面向对象、为设计者和开发者准备的图表绘制工具库。
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-4 col-lg-3 child_item">
+          <div class="thumbnail" style="height: 336px;">
+            <a href="#"  target="_blank">
+                <img class="lazy" src="http://static.bootcss.com/www/assets/img/chart.js.png" width="300" height="150"></a>
+            <div class="caption">
+              <h3>
+                <a href="#" target="_blank">Chart.js<br><small>精巧的JS图表绘制工具库</small></a>
+              </h3>
+              <p>
+              Chart.js是一个简单、面向对象、为设计者和开发者准备的图表绘制工具库。
+              </p>
+                <div class="pp_middle">
+                    <button class="btn btn-md btn-success">查看详情</button>
+                </div>
+            </div>
+          </div>
+        </div>
+{#      {% endfor %}#}
+
+
+</div>
+</div>
+{% endblock %}

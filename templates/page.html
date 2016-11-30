@@ -1,0 +1,54 @@
+<!-- calculate total pages-->
+{%if not total_number % per_page %}{% set pages = total_number // per_page %}{%else%}{% set pages = total_number // per_page + 1 %}{%endif%}
+<div>
+    <div id="host_info" style="float: left" class="col-sm-6">每页
+        <select id="perpage" class="pagination"  style="margin:0px; margin-top: 10px" onchange="newPerageInfo(this)">
+            <option value="10">10</option>
+            <option value="25">25</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+        </select>条记录，当前第&nbsp;
+        <span id="current_page">{{current_page}}</span>&nbsp;页,共&nbsp;
+        <span id="total_page">{{ pages }}</span>&nbsp;页,共&nbsp;
+        <span id="totalrecords">{{total_number}}</span>&nbsp;条记录&nbsp;
+    </div>
+    {% if total_number  > per_page %}
+        <div style="float: right">
+            <ul class="pagination" style="margin: 0px">
+                <li><a href="javascript:void(0)" onclick="newPageInfo(1)">&laquo;</a></li>
+                {% if current_page > 1%}
+                    <li><a href="javascript:void(0)" onclick="newPageInfo('{{ current_page-1 }}')">&lsaquo;</a></li>
+                {% endif%}
+                {% set page_shows = range(current_page-3, current_page+3) %}
+                {% for p in page_shows %}
+                    {% if p > 0 and p <= pages%}
+                            <li {%if current_page==p%}class="active"{%endif%}><a href="javascript:void(0)" onclick="newPageInfo('{{ p }}')">{{ p }}</a></li>
+                    {% endif %}
+                {% endfor %}
+                {% if current_page < pages%}
+                    <li><a href="javascript:void(0)" onclick="newPageInfo('{{ current_page + 1 }}')">&rsaquo;</a></li>
+                {% endif%}
+                <li><a href="javascript:void(0)" onclick="newPageInfo('{{ pages }}')">&raquo;</a></li>
+            </ul>
+        </div>
+    {% endif %}
+</div><br>
+
+<script>
+    function newPageInfo(num){
+        var para2 = '';
+        var urlpara = window.location.search.replace(/\?/,'').split('&');
+        for(var i in urlpara)
+        {
+            if(urlpara[i].indexOf('page=') == 0 ){}
+            else{para2 += '&' + urlpara[i];}
+        }
+        var para1 = '?page=' + num;
+        window.location = window.location.pathname + para1 + para2;
+    }
+
+    $(function () {
+        $("#perpage").val("{{ per_page }}");
+    });
+
+</script>

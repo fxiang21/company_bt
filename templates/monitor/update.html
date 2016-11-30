@@ -1,0 +1,221 @@
+<link href="{{ url_for('static', filename='plugins/magicsuggest/magicsuggest-min.css')}}" rel="stylesheet" type="text/css">
+{#<link href="{{ url_for('static', filename='plugins/select2/select2.min.css')}}" rel="stylesheet" type="text/css">#}
+<link rel="stylesheet" href="{{url_for('static', filename='dist/css/AdminLTE.min.css')}}">
+<link rel="stylesheet" href="{{url_for('static', filename='plugins/timepicker/bootstrap-timepicker.min.css')}}">
+<style>
+    input{
+        border-radius: 5px;
+    }
+</style>
+<section class="content">
+    <div class="box box-default">
+        <div class="box-header with-border">
+          <h3 class="box-title">{{ res.monitor_type }} 监控配置</h3>
+            <button class="pull-right btn btn-sm btn-warning" onclick="window.history.go(-1)">返回</button>
+        </div><!-- /.box-header -->
+        <div class="box-body">
+          <div class="row">
+              <form class="col-md-6" onsubmit="return false;">
+                <div class="form-group">
+                    <label for="mt_name" class="control-label">监控名称:</label>
+                    <span id="mt_name_tip"></span>
+                    <input id="mt_name" name="name" type="text" value="{{ res.name }}" class="form-control" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="mt_target" class="control-label">监控对象:</label>
+                    <span id="mt_target_tip"></span>
+                      <input id="mt_target"  name="target" type="text" readonly class="form-control" value="{{ res.target }}">
+                </div>
+                <div class="form-group">
+                    <label for="mt_stations">监控站点</label>
+                    <span id ='mt_stations_tip'></span>
+                    <select id="mt_stations" name="stations" class="form-control select2" multiple="multiple" style="width: 100%;">
+                        {% for m in stations %}
+                            {% if m._id in select_sta %}
+                            <option value="{{ m._id }}" selected>{{ m.name }}</option>
+                            {% else %}
+                            <option value="{{ m._id }}">{{ m.name }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="mt_cm_id">监控模板</label><span id="mt_tips" style="color:red"></span>
+                    <select id="mt_cm_id" name="cm_id"  class="form-control select2 select2-hidden-accessible"
+                            style="width: 100%;" tabindex="-1" aria-hidden="true">
+                        <option value=-1>新建模板</option>
+                        {% for m in cms %}
+                            {% if res %}
+                                <option {% if m._id == res.cm_id  %} selected{% endif %} value="{{ m._id }}">{{ m.name }}</option>
+                            {% else %}
+                                {% if m._id == 1 %}
+                                <option value="{{ m._id }}" selected>默认监控模板</option>
+                                {% else %}
+                                <option value="{{ m._id }}">{{ m.name }}</option>
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <labenl for="mt_at_id">告警模板</labenl>
+                    <span id="mt_at_id_tip"></span>
+                    <select id="mt_at_id" name="at_id" class="form-control select2 select2-hidden-accessible"
+                            style="width: 100%;" tabindex="-1" aria-hidden="true">
+                        {% for m in ats %}
+                            {% if res %}
+                                <option {% if m._id == res.at_id  %} selected{% endif %} value="{{ m._id }}">{{ m.name }}</option>
+                            {% else %}
+                            <option value="{{ m._id }}">{{ m.name }}</option>
+                            {% endif %}
+                        {% endfor %}
+                            <option value=-1>新建模板</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="mt_note_group">告警接收组&nbsp;</label>
+                    <button class="btn btn-xs btn-success"
+                            onclick="newTeamModal('{{ g.user.username }}', 'add_team_modal')">新增</button>
+                    <select id="mt_note_group" name="note_group"  class="form-control select2" multiple="multiple" style="width: 100%;">
+                      {% for m in teams %}
+                            {% if m.name == '默认告警组' %}
+                            <option value="{{ m._id }}" selected>m.name</option>
+                            {% else %}
+                            <option value="{{ m._id }}">{{ m.name }}</option>
+                            {% endif %}
+                      {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group" hidden>
+                    <label for="mt_monitor_type" class="control-label">监控类型</label>
+                      <input id="mt_monitor_type" name="monitor_type" type="text" value="{{ res.monitor_type }}" class="form-control">
+                </div>
+                <div class="form-group" hidden>
+                    <label for="mt_request_method" class="control-label">请求方式</label>
+                      <input id="mt_request_method" name="request_method" type="text" value="{{ res.request_method }}" class="form-control">
+                </div>
+                <div class="form-group" hidden>
+                    <label for="mt_update_id" class="control-label">项目ID</label>
+                      <input id="mt__update_id" name="_id" type="text" value="{{ res.mt_id }}" class="form-control">
+                </div>
+
+
+{#                <div class="form-group bootstrap-timepicker">#}
+{#                      <label>告警时间</label>#}
+{#                    <select id="alarm_begin" class="form-control">#}
+{#                        <option value='0'>0</option>#}
+{#                        {% for i in range(1,24) %}#}
+{#                            <option value="{{ i }}">{{ i }}</option>#}
+{#                        {% endfor %}#}
+{#                    </select>时至#}
+{#                    <select id="alarm_end">#}
+{#                        <option value='24'>0</option>#}
+{#                        {% for i in range() %}#}
+{#                            <option value="{{ i }}">{{ i }}</option>#}
+{#                        {% endfor %}#}
+{#                    </select>时#}
+{#                </div>#}
+
+              </form><!-- /.col -->
+              <div class="col-md-6">
+                  <div class="callout callout-default">
+                      {% include "monitor/collect_model.html" %}
+                  </div>
+                  <div class="callout">
+                      {% include "monitor/alarm_model.html" %}
+                  </div>
+              </div>
+                <div>
+                    {% include "monitor/team.html" %}
+                </div>
+
+
+          </div><!-- /.row -->
+        </div><!-- /.box-body -->
+        <div class="box-footer">
+            <div align="middle">
+                <button class="btn btn-success" onclick="commitMonitor('PUT')">提交</button>
+            </div>
+        </div>
+  </div>
+    <div class="modal fade" id="update_monitor_tips" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 id="modal_mail_con_update_title" class="modal-title">修改监控提示</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-horizontal">
+                      <div class="box-body">
+                          <div id="update_monitor_success" class="callout callout-success" style="display: none;">
+                            <h4>成功修改监控对象:</h4>
+                            <p id="update_monitor_success_tip"></p>
+                          </div>
+                          <div id="update_monitor_fail" class="callout callout-warning" style="display: none;">
+                            <h4>修改监控对象失败:</h4>
+                            <p id="update_monitor_fail_tip"></p>
+                          </div>
+                          <div id="update_monitor_error" class="callout callout-danger" style="display: none;">
+                            <h4>服务器处理错误</h4>
+                            <p id="update_monitor_error_tip"></p>
+                          </div>
+                      </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script src="{{url_for('static', filename='plugins/jquery/jquery-2.1.4.min.js')}}"></script>
+<script type="text/javascript" src="{{url_for('static', filename='plugins/select2/select2.full.min.js')}}"></script>
+<script src="{{url_for('static', filename='plugins/timepicker/bootstrap-timepicker.js')}}"></script>
+<script>
+
+
+$(function() {
+
+    $('.select2').select2();
+    $('#mt_cm_id').on('select2:select', function (evt) {
+        var cs = $(this).val();
+        if(cs == -1){
+            $("#mt_cm_id").select2('val', '1');
+            $('#collect_modal').modal('show');
+        }else{
+            renderCM(cs, '{{ monitor_type }}')
+        }
+    });
+    $('#mt_at_id').on('select2:select', function (evt) {
+        var cs = $(this).val();
+        if(cs == -1){
+            $("#mt_at_id").select2('val', '1');
+            $('#alarm_modal').modal('show');
+        }else{
+            renderAlarm(cs)
+        }
+    });
+    $('#mt_note_group').on({
+        'select2:select select2:unselect': function(evt){
+            var current_team_ids = $('#mt_note_group').val();
+            if(!current_team_ids){
+                receiverShow([], 'receivers_info');
+                return;
+            }
+            renderReceivers(current_team_ids);
+        }
+    });
+
+});
+
+$(function(){
+    renderCM('{{ res.cm_id }}', '{{ monitor_type }}');
+    renderAlarm('{{ res.at_id }}') ;
+    var current_team_ids = '{{ res.note_group }}'.split('.');
+    $("#mt_note_group").select2('val', current_team_ids);
+    renderReceivers(current_team_ids);
+})
+</script>
