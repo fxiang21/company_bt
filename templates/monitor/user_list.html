@@ -1,0 +1,47 @@
+{% extends 'index.html' %}
+{% block main %}
+<link href="/static/plugins/profile/style.css" rel="stylesheet">
+
+<body>
+
+    <div>
+        <div class="right-bar">
+
+            <div class="cards_wrap grayscale-images shadow clearfix" id="first_wrapper" style="height: 250px">
+
+                <li class="cards" id="first_1">
+                    <a href="images/int1.jpg" rel="lightbox-one" title="Interior">
+                        <img rel="lightbox" src="images/int1.jpg"></a>
+                    <span class="main_caption">Showcase</span>
+                    <span class="sub_caption">what you like</span>
+                </li>
+
+                <li class="cards" id="first_2">
+                    <a href="images/int2.jpg" rel="lightbox-one" title="Interior">
+                        <img src="images/int2.jpg"></a>
+                    <span class="main_caption">Awesome</span>
+                    <span class="sub_caption">clean, smooth things</span>
+                </li>
+
+                <li class="cards" id="first_3">
+                    <a href="images/int3.jpg" rel="lightbox-one" title="Interior">
+                        <img src="images/int3.jpg"></a>
+                    <span class="main_caption">Portfolio</span>
+                    <span class="sub_caption">you've worked hard on it</span>
+                </li>
+
+                <li class="cards" id="first_4">
+                    <a href="images/int4.jpg" rel="lightbox-one" title="Interior">
+                        <img src="images/int4.jpg"></a>
+                    <span class="main_caption">Over Here</span>
+                    <span class="sub_caption">do it your way</span>
+                </li>
+            </div>
+    </div>
+    </div>
+
+    <script type="text/javascript" src="/static/plugins/profile/jquery-latest.js"></script>
+    <script type="text/javascript" src="/static/plugins/profile/js.js"></script>
+    <!--<script type="text/javascript" src="js/slimbox2.js"></script>-->
+{#    <script type="text/javascript" src="js/bootstrap.min.js"></script>#}
+{% endblock %}

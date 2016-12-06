@@ -37,6 +37,10 @@ def details(item):
     return render_template("content/content_list.html", m_type=m_type)
 
 
+@index.route("profile", methods=["GET"])
+def profile():
+    return render_template("deep_bt.html", m_type="deep_baitong")
+
 
 
 

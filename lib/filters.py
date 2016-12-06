@@ -54,8 +54,8 @@ def wx_portrait(user_number):
 
 def content_parse(a):
     tmp = a.split(' ')
-    res = dict()
+    res = list()
     for i in tmp:
         if i.strip():
-            res[i.strip()] = "url"
+            res.append(i.strip())
     return res
