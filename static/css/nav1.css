@@ -420,7 +420,7 @@ lesshat-selector {
   height: 100%;
   display: block;
   float: left;
-  width: 16%;
+  width: 20%;
   padding: 40px 0 40px 24px;
 }
 .www-home-banner-bottom-2016 .module-wrap .ali-main-special li.ali-main-special-list:hover .special-left .title {
@@ -469,18 +469,18 @@ lesshat-selector {
   text-decoration: none;
 }
 .aliyun-index-product-sale .module-wrap .index-sale {
-  min-height: 830px;
+  min-height: 700px;
   width: 100%;
   background-color: rgba(55, 61, 65, 0.05);
-  padding-top: 74px;
-  padding-bottom: 68px;
+  padding-top: 34px;
+  padding-bottom: 10px;
 }
 .aliyun-index-product-sale .module-wrap .index-sale-title {
   text-align: center;
   font-size: 24px;
 }
 .aliyun-index-product-sale .module-wrap .card-area {
-  margin: 82px auto 0 auto;
+  margin: 32px auto 0 auto;
   width: 1180px;
 }
 .aliyun-index-product-sale .module-wrap .card-area .card-item {
@@ -489,7 +489,7 @@ lesshat-selector {
   position: relative;
   float: left;
   width: 18%;
-  height: 648px;
+  height: 588px;
   background-color: transparent;
   border: 1px solid #DBDBDD;
 }
@@ -667,7 +667,7 @@ lesshat-selector {
   border: 1px solid #00c1de;
   box-shadow: 0 0 20px rgba(0, 198, 226, 0.5);
   width: 28%;
-  height: 663px;
+  height: 600px;
 }
 .aliyun-index-product-sale .module-wrap .card-area .card-item.active .card .ali-product-img .un-hover {
   opacity: 0;
