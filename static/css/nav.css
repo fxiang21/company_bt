@@ -9,17 +9,17 @@ a:link,a:visited{text-decoration:none}
 
 .head-v3{position:relative;z-index:100;min-width:1000px}
 .head-v3 .navigation-inner{margin:0 auto;position:relative}
-.navigation-up{height:60px;background:#27303f}
+.navigation-up{height:60px;background:#ffffff}
 .navigation-up .navigation-v3{margin-left:25px;float:left;_margin-left:10px}
 /*.navigation-up .navigation-v3 ul{float:left}*/
 .navigation-up .navigation-v3 li{float:left;font:normal 16px/59px "microsoft yahei";color:#fff}
-.navigation-up .navigation-v3 .nav-up-selected{background:#344157}
-.navigation-up .navigation-v3 .nav-up-selected-inpage{background:#202833}
+.navigation-up .navigation-v3 .nav-up-selected{background:lightgray}
+.navigation-up .navigation-v3 .nav-up-selected-inpage{background:lightgray}
 .navigation-up .navigation-v3 li h2{font-weight:normal;padding:0;margin:0}
-.navigation-up .navigation-v3 li h2 a{padding:20px 15px;text-decoration:none;color:#fff;display:inline-block;height:60px;font-family:"microsoft yahei"}
+.navigation-up .navigation-v3 li h2 a{padding:20px 10px;text-decoration:none;color:#000000;display:inline-block;height:60px;font-family:"microsoft yahei"}
 
 .navigation-down{position:absolute;top:60px;left:0px;width:100%}
-.navigation-down .nav-down-menu{width:100%;margin:0;background:#344157;position:absolute;top:0px}
+.navigation-down .nav-down-menu{width:100%;margin:0;position:absolute;top:0px}
 .navigation-down .nav-down-menu .navigation-down-inner{margin:auto;width:1200px;position:relative}
 .navigation-down .nav-down-menu dl{float:left;margin:18px 80px 18px 0}
 .navigation-down .menu-1 dl{margin:20px 80px 25px 0}

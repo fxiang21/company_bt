@@ -1,8 +1,15 @@
 {% block css %}
 <link href="/static/css/nav.css" rel="stylesheet">
+    <style>
+        .navigation-down a{
+                background: cornsilk;
+                font-weight: bolder
+        }
+    </style>
 {% endblock %}
 {% block main %}
-<div class="head-v3">
+    <div class="container">
+        <div class="head-v3">
 
 	<div class="navigation-up">
 
@@ -239,6 +246,7 @@
 	</div>
 
 </div>
+    </div>
 {% endblock %}
 {% block js %}
 <script src="/static/js/jquery.js"></script>
