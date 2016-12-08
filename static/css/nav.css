@@ -19,7 +19,7 @@ a:link,a:visited{text-decoration:none}
 .navigation-up .navigation-v3 li h2 a{padding:20px 10px;text-decoration:none;color:#000000;display:inline-block;height:60px;font-family:"microsoft yahei"}
 
 .navigation-down{position:absolute;top:60px;left:0px;width:100%}
-.navigation-down .nav-down-menu{width:100%;margin:0;position:absolute;top:0px}
+.navigation-down .nav-down-menu{width:100%;margin:0;background:lightgray;position:absolute;top:0px}
 .navigation-down .nav-down-menu .navigation-down-inner{margin:auto;width:1200px;position:relative}
 .navigation-down .nav-down-menu dl{float:left;margin:18px 80px 18px 0}
 .navigation-down .menu-1 dl{margin:20px 80px 25px 0}
