@@ -12,9 +12,9 @@ a:link,a:visited{text-decoration:none}
 .navigation-up{height:60px;background:#ffffff}
 .navigation-up .navigation-v3{margin-left:25px;float:left;_margin-left:10px}
 /*.navigation-up .navigation-v3 ul{float:left}*/
-.navigation-up .navigation-v3 li{float:left;font:normal 16px/59px "microsoft yahei";color:#fff}
+.navigation-up .navigation-v3 li{float:left;font:normal 16px/59px "microsoft yahei";color:#fff;margin:0 7px}
 .navigation-up .navigation-v3 .nav-up-selected{background:lightgray}
-.navigation-up .navigation-v3 .nav-up-selected-inpage{background:lightgray}
+.navigation-up .navigation-v3 .nav-up-selected-inpage{background:lightgray;}
 .navigation-up .navigation-v3 li h2{font-weight:normal;padding:0;margin:0}
 .navigation-up .navigation-v3 li h2 a{padding:20px 10px;text-decoration:none;color:#000000;display:inline-block;height:60px;font-family:"microsoft yahei"}
 
