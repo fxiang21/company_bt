@@ -10,7 +10,7 @@ a:link,a:visited{text-decoration:none}
 .head-v3{position:relative;z-index:100;min-width:1000px}
 .head-v3 .navigation-inner{margin:0 auto;position:relative}
 .navigation-up{height:60px;background:#ffffff}
-.navigation-up .navigation-v3{margin-left:25px;float:left;_margin-left:10px}
+.navigation-up .navigation-v3{float:left;_margin-left:10px}
 /*.navigation-up .navigation-v3 ul{float:left}*/
 .navigation-up .navigation-v3 li{float:left;font:normal 16px/59px "microsoft yahei";color:#fff;margin:0 7px}
 .navigation-up .navigation-v3 .nav-up-selected{background:lightgray}

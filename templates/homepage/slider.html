@@ -8,7 +8,7 @@
             </ol>
 
             <div class="carousel-inner">
-                <div class="item active" style="background-image: url(/static/images/slider/bg01.jpg);height:450px;overflow:hidden">
+                <div class="item active" style="background-image: url(/static/images/slider/bg1.jpg);height:450px;overflow:hidden">
 {#                    <div class="container">#}
 {#                        <div class="row">#}
 {#                            <div class="col-sm-6">#}
@@ -30,7 +30,7 @@
 {#                    </div>#}
                 </div><!--/.item-->
 
-                <div class="item" style="background-image: url(/static/images/slider/bg02.jpg);height:450px;overflow:hidden">
+                <div class="item" style="background-image: url(/static/images/slider/bg2.jpg);height:450px;overflow:hidden">
 {#                    <div class="container">#}
 {#                        <div class="row ">#}
 {#                            <div class="col-sm-6">#}
@@ -52,7 +52,7 @@
 {#                    </div>#}
                 </div><!--/.item-->
 
-                <div class="item" style="background-image: url(/static/images/slider/bg1_old.jpg);height:450px;overflow:hidden">
+                <div class="item" style="background-image: url(/static/images/slider/bg01.jpg);height:450px;overflow:hidden">
 {#                    <div class="container">#}
 {#                        <div class="row">#}
 {#                            <div class="col-sm-6">#}
@@ -87,18 +87,18 @@
 
 <script>
 
-    $(function () {
-        var a = 0;
-        setInterval(function(){
-            a %= 3;
-            console.log(a);
-            var obj1 = $('.carousel-inner div');
-            var obj2 = $('.carousel-indicators li');
-            obj1.removeClass("active");
-            obj1.eq(a).addClass("active");
-            obj2.removeClass("active");
-            obj2.eq(a).addClass("active");
-            a+=1;
-        },5000)
-    })
+{#    $(function () {#}
+{#        var a = 0;#}
+{#        setInterval(function(){#}
+{#            a %= 3;#}
+{#            console.log(a);#}
+{#            var obj1 = $('.carousel-inner div');#}
+{#            var obj2 = $('.carousel-indicators li');#}
+{#            obj1.removeClass("active");#}
+{#            obj1.eq(a).addClass("active");#}
+{#            obj2.removeClass("active");#}
+{#            obj2.eq(a).addClass("active");#}
+{#            a+=1;#}
+{#        },5000)#}
+{#    })#}
 </script>

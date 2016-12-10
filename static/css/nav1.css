@@ -570,6 +570,8 @@ lesshat-selector {
   position: absolute;
   left: 0;
   width: 100%;
+  transform:scale(1.4);
+  filter: progid:DXImageTransform.Microsoft.Matrix(M11=1.4,M12=0,M21=0,M22=1.4,SizingMethod='auto expand');
 }
 .aliyun-index-product-sale .module-wrap .card-area .card-item .card .card-title .ali-product-img .un-hover {
   z-index: 1;
@@ -624,6 +626,9 @@ lesshat-selector {
 }
 .aliyun-index-product-sale .module-wrap .card-area .card-item .card .card-content.content-second .main-desc {
   line-height: 22px;
+    color: blue;
+    font-weight: bolder;
+    font-size: 16px;
 }
 .aliyun-index-product-sale .module-wrap .card-area .card-item .card .card-content.content-second .main-btn {
   cursor: pointer;

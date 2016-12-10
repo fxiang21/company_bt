@@ -183,7 +183,7 @@ body > section {
 }
 
 .top-bar {
-  line-height: 28px;
+  /*line-height: 28px;*/
 }
 
 .top-number{
@@ -422,6 +422,7 @@ input.search-form:hover {
   opacity: 1;
   /* IE 4-9 */
     filter:alpha(opacity=100);
+
   -webkit-transition: opacity ease-in-out 500ms;
   -moz-transition: opacity ease-in-out 500ms;
   -o-transition: opacity ease-in-out 500ms;
@@ -655,7 +656,8 @@ input.search-form:hover {
 }
 
 #services {
-  background: #000 url(../images/services/bg_services.jpg);
+  /*background: #000 url(../images/services/bg_services.jpg);*/
+
   background-size: cover;
 }
 
