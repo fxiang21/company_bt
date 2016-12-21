@@ -115,12 +115,12 @@ a:focus {
 }
 
 body > section {
-  padding: 70px 0;
+  padding: 40px 0;
 }
 
 .center {
   text-align: center;
-  padding-bottom: 55px;
+  padding-bottom: 35px;
 }
 
 .scaleIn {
