@@ -37,6 +37,12 @@ def details(item):
     return render_template("content/content_list.html", m_type=m_type)
 
 
+@index.route("detail/<string:item>", methods=["GET"])
+def detail(item):
+    m_type = "corp_register" if item is None else item
+    return render_template("content/content_detail.html", m_type=m_type)
+
+
 @index.route("profile", methods=["GET"])
 def profile():
     return render_template("deep_bt.html", m_type="deep_baitong")
