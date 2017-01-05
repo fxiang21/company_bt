@@ -1,0 +1,64 @@
+body {
+  padding-bottom: 100px;
+  background-image: url(http://wmh.github.io/circular-slides-generator/static/img/noise.png);
+}
+h1, h2, h3 {
+  padding-top: 20px;
+  font-family: 'Amaranth', sans-serif;
+}
+.scroll-text {
+  border: 1px solid red;
+  width: 400px;
+  height: 4.5em;
+  overflow: hidden;
+}
+.scroll-text ul {
+  width: 800px;
+  height: 100px;
+  overflow: hidden;
+  margin: 0;
+}
+.scroll-text ul li {
+  height: 1.5em;
+}
+.scroll-img {
+  border: 1px solid red;
+  width: 680px;
+  height: 142px;
+  overflow: hidden;
+  font-size: 0;
+}
+.scroll-img ul {
+  width: 700px;
+  height: 600px;
+  margin: 0;
+}
+.scroll-img ul li {
+  display: inline-block;
+  margin: 10px 0 10px 10px;
+}
+#demo4.scroll-img ul,
+#demo5.scroll-img ul {
+  width: 1500px;
+}
+#demo5-btn {
+  width: 680px;
+  padding-top: 10px;
+}
+#demo6 {
+  width: 412px;
+}
+#demo6-queue {
+  width: 680px;
+}
+#demo6 p, #demo6-queue p {
+  width: 124px;
+  height: 124px;
+  background-color: lightgray;
+  font-family: 'Amaranth', sans-serif;
+  font-size: 82px;
+  text-align: center;
+  display: table-cell;
+  vertical-align:middle;
+}
+

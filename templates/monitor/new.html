@@ -195,7 +195,6 @@
     function set_alarm_model_display(cs) {
         var url = $SCRIPT_ROOT + '/monitor/atpl/details/' + cs;
             $.get(url,{},function(resp){
-                console.log(resp)
                 var res = JSON.parse(resp);
                 var tmp = res[0].strategy.split('||');
                 var r = {};

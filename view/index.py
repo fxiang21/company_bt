@@ -8,16 +8,8 @@ import sys
 reload(sys)
 sys.setdefaultencoding('utf-8')
 from flask import Blueprint, redirect, render_template,request,jsonify,session
-from lib.util import cache_key
-from flask import current_app,g
-import json,hashlib, thread
-from permissions import auth
-from sendmail import SendHtmlEmail
-from lib.util import Username, Auth, IsLogin
-import math
-from lib.util import get_show_pages
-from lib import monitor as stm
-from lib.common import record_list, table_args, SqlResultConvert, InfluxData
+from lib import db as data
+from lib.common import SqlResultConvert
 
 
 index = Blueprint('index', __name__)
@@ -26,7 +18,13 @@ index = Blueprint('index', __name__)
 @index.route('', methods=['GET'])
 def index_page():
     try:
-        return render_template('homepage.html', m_type='hp')
+        groups_db = data.NewsGroup.query()
+        groups = SqlResultConvert.to_list(groups_db)
+        news = dict()
+        for group in groups:
+            r, num = data.News.query_num(limit=5, desc="created", **{"group": group.get("ngid")})
+            news[group.get("ngid")] = SqlResultConvert.to_list(r)
+        return render_template('homepage.html', m_type='hp', news=news)
     except Exception as e:
         return jsonify(message=str(e))
 

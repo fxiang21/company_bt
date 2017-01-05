@@ -1,114 +1,75 @@
-<section id="recent-works">
-        <div class="container">
-            <div class="center wow fadeInDown">
-                <h2>Recent Works</h2>
-                <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut <br> et dolore magna btqua. Ut enim ad minim veniam</p>
-            </div>
+<style>
 
-            <div class="row">
-                <div class="col-xs-12 col-sm-4 col-md-3">
-                    <div class="recent-work-wrap">
-                        <img class="img-responsive" src="/static/images/portfolio/recent/item1.png" alt="">
-                        <div class="overlay">
-                            <div class="recent-work-inner">
-                                <h3><a href="#">Business theme</a> </h3>
-                                <p>There are many variations of passages of Lorem Ipsum available, but the majority</p>
-                                <a class="preview" href="/static/images/portfolio/full/item1.png" rel="prettyPhoto"><i class="fa fa-eye"></i> View</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-xs-12 col-sm-4 col-md-3">
-                    <div class="recent-work-wrap">
-                        <img class="img-responsive" src="/static/images/portfolio/recent/item2.png" alt="">
-                        <div class="overlay">
-                            <div class="recent-work-inner">
-                                <h3><a href="#">Business theme</a></h3>
-                                <p>There are many variations of passages of Lorem Ipsum available, but the majority</p>
-                                <a class="preview" href="/static/images/portfolio/full/item2.png" rel="prettyPhoto"><i class="fa fa-eye"></i> View</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-xs-12 col-sm-4 col-md-3">
-                    <div class="recent-work-wrap">
-                        <img class="img-responsive" src="/static/images/portfolio/recent/item3.png" alt="">
-                        <div class="overlay">
-                            <div class="recent-work-inner">
-                                <h3><a href="#">Business theme </a></h3>
-                                <p>There are many variations of passages of Lorem Ipsum available, but the majority</p>
-                                <a class="preview" href="/static/images/portfolio/full/item3.png" rel="prettyPhoto"><i class="fa fa-eye"></i> View</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-xs-12 col-sm-4 col-md-3">
-                    <div class="recent-work-wrap">
-                        <img class="img-responsive" src="/static/images/portfolio/recent/item4.png" alt="">
-                        <div class="overlay">
-                            <div class="recent-work-inner">
-                                <h3><a href="#">Business theme </a></h3>
-                                <p>There are many variations of passages of Lorem Ipsum available, but the majority</p>
-                                <a class="preview" href="/static/images/portfolio/full/item4.png" rel="prettyPhoto"><i class="fa fa-eye"></i> View</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-xs-12 col-sm-4 col-md-3">
-                    <div class="recent-work-wrap">
-                        <img class="img-responsive" src="/static/images/portfolio/recent/item5.png" alt="">
-                        <div class="overlay">
-                            <div class="recent-work-inner">
-                                <h3><a href="#">Business theme</a></h3>
-                                <p>There are many variations of passages of Lorem Ipsum available, but the majority</p>
-                                <a class="preview" href="/static/images/portfolio/full/item5.png" rel="prettyPhoto"><i class="fa fa-eye"></i> View</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-xs-12 col-sm-4 col-md-3">
-                    <div class="recent-work-wrap">
-                        <img class="img-responsive" src="/static/images/portfolio/recent/item6.png" alt="">
-                        <div class="overlay">
-                            <div class="recent-work-inner">
-                                <h3><a href="#">Business theme </a></h3>
-                                <p>There are many variations of passages of Lorem Ipsum available, but the majority</p>
-                                <a class="preview" href="/static/images/portfolio/full/item6.png" rel="prettyPhoto"><i class="fa fa-eye"></i> View</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-xs-12 col-sm-4 col-md-3">
-                    <div class="recent-work-wrap">
-                        <img class="img-responsive" src="/static/images/portfolio/recent/item7.png" alt="">
-                        <div class="overlay">
-                            <div class="recent-work-inner">
-                                <h3><a href="#">Business theme </a></h3>
-                                <p>There are many variations of passages of Lorem Ipsum available, but the majority</p>
-                                <a class="preview" href="/static/images/portfolio/full/item7.png" rel="prettyPhoto"><i class="fa fa-eye"></i> View</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-xs-12 col-sm-4 col-md-3">
-                    <div class="recent-work-wrap">
-                        <img class="img-responsive" src="/static/images/portfolio/recent/item8.png" alt="">
-                        <div class="overlay">
-                            <div class="recent-work-inner">
-                                <h3><a href="#">Business theme </a></h3>
-                                <p>There are many variations of passages of Lorem Ipsum available, but the majority</p>
-                                <a class="preview" href="/static/images/portfolio/full/item8.png" rel="prettyPhoto"><i class="fa fa-eye"></i> View</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div><!--/.row-->
-        </div><!--/.container-->
-    </section>
+.picScroll-left{
+	width: 100%;
+	height: auto;
+	overflow: hidden;
+	position: relative;
+	border: 1px solid #ccc;
+	margin-left: auto;
+	margin-right: auto;
+}
+.picScroll-left .hd .prev{isplay:block;  float:left; margin-left:5px; margin-top:120px;  overflow:hidden;
+			 cursor:pointer; }
+.picScroll-left .hd .next{ display:block;  float:right; margin-right:5px; margin-top:120px;  overflow:hidden;
+			 cursor:pointer; }
+.picScroll-left .bd{ padding-top:20px;margin-left:25px}
+.picScroll-left .bd ul{ overflow:hidden;}
+.picScroll-left .bd ul li{ margin:0 10px;width:340px;float:left;display:inline; overflow:hidden; text-align:center;  }
+.picScroll-left .bd ul li .pic{text-align:center;}
+.picScroll-left .bd ul li .pic img{ display:block; }
+.picScroll-left .bd ul li .title{ line-height:50px;}
+</style>
+<section id="recent_works" style="padding-bottom: 0px">
+    <div class="container">
+        <div class="center wow fadeInDown">
+            <h2>典型案例</h2>
+        </div>
+        <div class="picScroll-left">
+			<div class="hd">
+				<a class="prev" href="javascript:void(0)"><img src="/static/images/works/left.jpg" /></a>
+        		<a class="next" href="javascript:void(0)"><img src="/static/images/works/right.jpg"/></a>
+			</div>
+			<div class="bd">
+				<ul class="picList">
+					<li>
+						<div class="pic"><a href="#"><img src="/static/images/works/1.jpg"/></a></div>
+						<div class="title"><a href="#">效果图1</a></div>
+					</li>
+					<li>
+						<div class="pic"><a href="#"><img src="/static/images/works/2.jpg" /></a></div>
+						<div class="title"><a href="#">效果图2</a></div>
+					</li>
+					<li>
+						<div class="pic"><a href="#"><img src="/static/images/works/3.jpg" /></a></div>
+						<div class="title"><a href="#">效果图3</a></div>
+					</li>
+					<li>
+						<div class="pic"><a href="#"><img src="/static/images/works/4.jpg" /></a></div>
+						<div class="title"><a href="#">效果图4</a></div>
+					</li>
+					<li>
+						<div class="pic"><a href="#"><img src="/static/images/works/5.jpg" /></a></div>
+						<div class="title"><a href="#">效果图5</a></div>
+					</li>
+					<li>
+						<div class="pic"><a href="#"><img src="/static/images/works/6.jpg" /></a></div>
+						<div class="title"><a href="#">效果图6</a></div>
+					</li>
+                    <li>
+						<div class="pic"><a href="#"><img src="/static/images/works/7.jpg" /></a></div>
+						<div class="title"><a href="#">效果图6</a></div>
+					</li>
+                    <li>
+						<div class="pic"><a href="#"><img src="/static/images/works/8.jpg" /></a></div>
+						<div class="title"><a href="#">效果图6</a></div>
+					</li>
+                    <li>
+						<div class="pic"><a href="#"><img src="/static/images/works/9.jpg" /></a></div>
+						<div class="title"><a href="#">效果图6</a></div>
+					</li>
+				</ul>
+			</div>
+		</div>
+    </div><!--/.container-->
+</section>

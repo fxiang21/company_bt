@@ -3,7 +3,7 @@
 
 from sqlalchemy.ext.declarative import DeclarativeMeta
 from datetime import datetime
-from lib import monitor as stm
+# from lib import monitor as stm
 from flask import current_app
 import requests
 import json
@@ -170,37 +170,37 @@ class InfluxData:
         return result
 
 
-def record_list(obj, username, **kwargs):
-    res = list()
-    if issubclass(obj, stm.Station):
-        r = obj.query(**kwargs)
-        for i in r:
-            res.append({'_id': i.s_id, 'name': i.alias})
-    # elif issubclass(obj, stm.Receiver):
-    #     r = obj.query(**{})
-    #     for i in r:
-    #         res.append({'_id': i.uid, 'name': i.name})
-    elif issubclass(obj, stm.AlarmTemplate):
-        args = {'creator': 'ADMIN', 'alarm_type': kwargs.get('alarm_type', '')}
-        r = obj.query(**args)
-        for i in r:
-            res.append({'_id': i.at_id, 'name': i.name})
-        if username:
-            args = {'creator': username, 'alarm_type': kwargs.get('alarm_type', '')}
-            r2 = obj.query(**args)
-            for j in r2:
-                res.append({'_id': j.at_id, 'name': j.name})
-    else:
-        args = {'creator': 'ADMIN'}
-        r = obj.query(**args)
-        for i in r:
-            res.append({'_id': getattr(i, obj.tid), 'name': i.name})
-        if username:
-            args = {'creator': username}
-            r2 = obj.query(**args)
-            for j in r2:
-                res.append({'_id': getattr(j, obj.tid), 'name': j.name})
-    return res
+# def record_list(obj, username, **kwargs):
+#     res = list()
+#     if issubclass(obj, stm.Station):
+#         r = obj.query(**kwargs)
+#         for i in r:
+#             res.append({'_id': i.s_id, 'name': i.alias})
+#     # elif issubclass(obj, stm.Receiver):
+#     #     r = obj.query(**{})
+#     #     for i in r:
+#     #         res.append({'_id': i.uid, 'name': i.name})
+#     elif issubclass(obj, stm.AlarmTemplate):
+#         args = {'creator': 'ADMIN', 'alarm_type': kwargs.get('alarm_type', '')}
+#         r = obj.query(**args)
+#         for i in r:
+#             res.append({'_id': i.at_id, 'name': i.name})
+#         if username:
+#             args = {'creator': username, 'alarm_type': kwargs.get('alarm_type', '')}
+#             r2 = obj.query(**args)
+#             for j in r2:
+#                 res.append({'_id': j.at_id, 'name': j.name})
+#     else:
+#         args = {'creator': 'ADMIN'}
+#         r = obj.query(**args)
+#         for i in r:
+#             res.append({'_id': getattr(i, obj.tid), 'name': i.name})
+#         if username:
+#             args = {'creator': username}
+#             r2 = obj.query(**args)
+#             for j in r2:
+#                 res.append({'_id': getattr(j, obj.tid), 'name': j.name})
+#     return res
 
 
 def get_show_pages(page, pages):
