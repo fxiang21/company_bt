@@ -7,6 +7,7 @@ class GunicornServer(Command):
     description = 'Run the app within Gunicorn'
 
     def __init__(self, host='127.0.0.1', port=5000, workers=9, worker_class="sync", daemon=False):
+        print '........'
         self.port = port
         self.host = host
         self.workers = workers
@@ -40,7 +41,9 @@ class GunicornServer(Command):
                    default=self.daemon)
         )
 
-    def handle(self, app, host, port, workers, worker_class, daemon):
+    def run(self, *args):
+        print '22222222222'
+        app, host, port, workers, worker_class, daemon = args
 
         from gunicorn import version_info
 
