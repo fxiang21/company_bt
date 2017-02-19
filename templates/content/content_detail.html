@@ -1,19 +1,46 @@
 {% extends "index.html" %}
 {% block css %}
     <style>
-        .side {
-            width: 100%;
-            height: 100%;
-            position: relative;
-        }
-        .s01 {
-            width: 32px;
-            height: 32px;
-            display: inline-block;
-            vertical-align: top;
-            margin-top: 15px;
-            margin-right: 15px;
-        }
+{#        .side {#}
+{#            width: 100%;#}
+{#            height: 100%;#}
+{#            position: relative;#}
+{#        }#}
+{#        .s01 {#}
+{#            width: 32px;#}
+{#            height: 32px;#}
+{#            display: inline-block;#}
+{#            vertical-align: top;#}
+{#            margin-top: 15px;#}
+{#            margin-right: 15px;#}
+{#        }#}
+    #group_list li {
+        padding: 5px;
+    }
+    #group_list li a{
+        font-size: 20px;
+        color: #333;
+    }
+    .title {
+        font-size: 18px;
+        color: #333;
+        text-align: center;
+        margin-top: 15px;
+        margin-bottom: 20px;
+    }
+    .update_time {
+        font-size: 16px;
+        color: #666;
+        text-align: center;
+    }
+    .content {
+        font-size: 16px;
+        color: #666;
+        text-align: left;
+        line-height: 27px;
+        padding: 10px;
+        height: auto;
+    }
     </style>
 {% endblock %}
 {% block main %}
@@ -26,17 +53,17 @@
             <li class="active">{{ doc_details.title }}</li>
         </ol>
 
-        <div class="col-md-2">
+        <div id="group_list" class="col-md-2" style="border-right: 1px solid black">
             <ul>
                 {% for i in sec_g_list %}
-                    <li><a href="/{{ i.d_id }}"><div class="side"><div class="s01"></div>{{ i.name }}</div></a></li>
+                    <li><a href="/{{ i.d_id }}">{{ i.name }}</a></li>
                 {% endfor %}
             </ul>
         </div>
 
         <div class="col-md-10">
-            <div class="con_title">{{ doc_details.title }}</div>
-            <div class="con_time">日期：{{ doc_details.update_time }}</div>
+            <h1 class="title">{{ doc_details.title }}</h1>
+            <div class="update_time">更新日期：{{ doc_details.update_time }}</div>
             <div class="content">{{ doc_details.details | safe }}</div>
         </div>
     </div>

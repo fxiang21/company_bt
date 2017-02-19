@@ -6,7 +6,7 @@
     .media_top .l{font-size:14px;color:#666;}
     .media_top .r{float:right;display:block;background:url(/statics/images/img/jia.png) no-repeat left;padding-left:24px;font-size:14px;padding-left:1.5rem;font-size:0.875rem;color:#666;margin-right:14px;margin-right:0.9rem;}
     .media_top .r a{color:#666;}
-    .media_img img{margin-top:24px;margin-top:1.5rem;display: block;height: auto;max-width: 100%;line-height: 1;}
+    .media_img img{margin-top:24px;margin-top:1.5rem;display: block;height: 200px;max-width: 100%;line-height: 1;}
     .txt{font-size:16px;width:100%;text-align:center;line-height:32px;line-height:2.0rem;background:url(/statics/images/img/rgba60.png);left: 0;bottom: 0;color: #fff;font-family: "微软雅黑";position:absolute;margin-top:31px;margin-top:-1.95rem;}
     .company ul li{width:100%;font-size:14px;line-height:31px;line-height:1.95rem;border-bottom:1px dashed #ccc;}
     .company ul li.media_img{border:0;}
@@ -33,34 +33,28 @@
         <div class="company">
         <div class="media_top">公司风采<br><span class="l">COMPANY INTRODUCTION</span><span class="r"><a href="/#">更多</a></span></div>
         <ul>
-        <li class="media_img"><a href="#"><img src="/static/images/media/img1.jpg" width="380" height="200"><div class="txt">新办天津村镇银行条件</div></a></li>
-        <li><a href="#"><i></i><div class="">精英齐聚风雨同舟,阳光奥美集团2017年春...<span>2017-01-22</span></div></a></li>
-        <li><a href="#"><i></i><div class="">工商总局关于全面推进企业简易注销登记...<span>2017-01-03</span></div></a></li>
-        <li><a href="#"><i></i><div class="">天津典当行转让-阳光奥美独家资源<span>2016-12-07</span></div></a></li>
-        <li><a href="#"><i></i><div class="">培训学校办学资质转让<span>2016-12-05</span></div></a></li>
-        <li style="background: none;"><a href="#"><i></i><div class="">转让带20个车指标的汽车租赁公司<span>2016-11-22</span></div></a></li>
+        <li class="media_img"><a href="#"><img src="/static/images/media/media1.jpeg" width="380" height="200"><div class="txt"></div></a></li>
+        {% for i in docs_list_1 %}
+            <li><a href="/source/detail/{{ i.d_id }}"><i></i><div class="">{{ i.title }}<span>{{ i.update_time }}</span></div></a></li>
+        {% endfor %}
         </ul>
         </div>
         <div class="dynamic">
         <div class="media_top">政策资讯<br><span class="l">POLICY INFORMATION </span><span class="r"><a href="/#">更多</a></span></div>
         <ul>
-        <li class="media_img"><a href="#"><img src="/static/images/media/img1.jpg" width="380" height="200"><div class="txt">2017年外资商业保理公司注册资金要求详解</div></a></li>
-        <li><a href="#"><i></i><div class="">2017年外资融资租赁公司经营范围及注册...<span>2017-02-10</span></div></a></li>
-        <li><a href="#"><i></i><div class="">股份有限公司注册-股份有限公司设立的条...<span>2017-02-10</span></div></a></li>
-        <li><a href="#"><i></i><div class="">商业保理公司注册流程详解<span>2016-12-08</span></div></a></li>
-        <li><a href="#"><i></i><div class="">北京公司股权转让有五大类型<span>2016-10-27</span></div></a></li>
-        <li style="background: none;"><a href="#"><i></i><div class="">融资租赁公司注册需要具备哪些条件？<span>2016-10-19</span></div></a></li>
+        <li class="media_img"><a href="#"><img src="/static/images/media/media2.png" width="380" height="200"><div class="txt"></div></a></li>
+        {% for i in docs_list_2 %}
+            <li><a href="/source/detail/{{ i.d_id }}"><i></i><div class="">{{ i.title }}<span>{{ i.update_time }}</span></div></a></li>
+        {% endfor %}
         </ul>
         </div>
         <div class="ask">
         <div class="media_top">常见问题<br><span class="l">FREQUENTLY ASKED QUESTIONS</span><span class="r"><a href="/#">更多</a></span></div>
         <ul>
-        <li class="media_img"><a href="#"><img src="/static/images/media/img1.jpg" width="380" height="200"><div class="txt">北京车指标常见问题解答</div></a></li>
-        <li><a href="#"><i></i><div class="">申请基金销售业务资格应当具备什么条件<span>2016-12-09</span></div></a></li>
-        <li><a href="#"><i></i><div class="">北京注册分公司需要提供什么资料？<span>2016-12-09</span></div></a></li>
-        <li><a href="#"><i></i><div class="">融资租赁纯外资的要变更合资的，对内资...<span>2016-12-05</span></div></a></li>
-        <li><a href="#"><i></i><div class="">上海注册融资租赁公司多少钱？<span>2016-11-15</span></div></a></li>
-        <li style="background: none;"><a href="#"><i></i><div class="">注册融资租赁公司审批条件？<span>2016-11-01</span></div></a></li>
+        <li class="media_img"><a href="#"><img src="/static/images/media/media3.jpeg" width="380" height="200px!important"><div class="txt"></div></a></li>
+       {% for i in docs_list_3 %}
+            <li><a href="/source/detail/{{ i.d_id }}"><i></i><div class="">{{ i.title }}<span>{{ i.update_time }}</span></div></a></li>
+        {% endfor %}
         </ul>
         </div>
     </div>

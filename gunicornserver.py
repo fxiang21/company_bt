@@ -15,6 +15,7 @@ class GunicornServer(Command):
         self.daemon = daemon
 
     def get_options(self):
+        print '33333333'
         return (
             Option('-H', '--host',
                    dest='host',

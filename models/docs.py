@@ -34,6 +34,7 @@ class DocGroup(db.Model):
 
     d_id = db.Column(db.SmallInteger, primary_key=True, nullable=False, autoincrement=True)
     name = db.Column(db.String(64), nullable=False)
+    alias = db.Column(db.String(128), nullable=False)
 
     __table_args__ = (db.UniqueConstraint("name"), )
 

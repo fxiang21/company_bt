@@ -14,6 +14,7 @@ __author__ = 'xiangfeng'
 source = Blueprint('source', __name__)
 doc_manager = DocManage()
 
+
 @source.route('/', methods=['GET'])
 def index_page():
     return render_template("detail/index.html")
