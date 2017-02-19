@@ -7,7 +7,7 @@
     }
     .sol_items{
         border: 1px solid black;
-        text-align: center;
+        /*text-align: center;*/
         padding-top:20px;
         height: 400px;
     }
@@ -29,7 +29,7 @@
     .sol_icon{
         width: 100px !important;
         height: 100px;
-        text-align: center;
+        /*text-align: center;*/
         vertical-align: middle;
         padding-top: 25px;
         color: darkred;

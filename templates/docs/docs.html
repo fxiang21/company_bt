@@ -1,0 +1,70 @@
+{% extends "layout.html" %}
+
+{% block css %}
+{#<link href="/static/libs/sb-admin-2/font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">#}
+{%if not result[0].url%}
+<link href="../../static/libs/froala/css/froala_editor.min.css" rel="stylesheet" type="text/css">
+{#<link href="../../static/libs/magicsuggest/magicsuggest-min.css" rel="stylesheet" type="text/css">#}
+{%endif%}
+<style>
+    /*embed {*/
+        /*width: 800px;*/
+        /*text-align: center;*/
+        /*height: 600px;*/
+    /*}*/
+</style>
+{% endblock %}
+
+
+{% block js %}
+{% endblock %}
+{% block main %}
+<div class="col-md-12 col-xs-12" style="text-align: center;margin-bottom: 20px">
+    <h2>{{result[0].title}}</h2>
+    {%if result[0].url%}
+    <iframe src="{{result[0].url}}" width="100%" height="800"></iframe>
+    {%else%}
+    <div class="box-body box-padding">
+        <textarea id="details" name="details">
+            {{result[0].details | safe}}
+        </textarea>
+    </div>
+    {%endif%}
+</div>
+<!--<embed id="plugin" type="application/x-google-chrome-pdf" src="/static/docs/{{name}}.pdf"></embed>-->
+{% endblock %}
+{% block script %}
+{%if not result[0].url%}
+<script type="text/javascript" src="../../static/libs/froala/js/froala_editor.min.js"></script>
+<!--[if lt IE 9]>
+<script type="text/javascript" src="../../static/libs/froala/js/froala_editor_ie8.min.js"></script>
+<![endif]-->
+<!--<script type="text/javascript" src="../../static/libs/froala/js/plugins/tables.min.js"></script>-->
+<!--<script type="text/javascript" src="../../static/libs/froala/js/plugins/lists.min.js"></script>-->
+<!--<script type="text/javascript" src="../../static/libs/froala/js/plugins/colors.min.js"></script>-->
+<!--<script type="text/javascript" src="../../static/libs/froala/js/plugins/media_manager.min.js"></script>-->
+<!--<script type="text/javascript" src="../../static/libs/froala/js/plugins/font_family.min.js"></script>-->
+<!--<script type="text/javascript" src="../../static/libs/froala/js/plugins/font_size.min.js"></script>-->
+<!--<script type="text/javascript" src="../../static/libs/froala/js/plugins/block_styles.min.js"></script>-->
+
+
+<script>
+
+    $(function() {
+        $('#details').editable({
+            inlineMode: false,
+            language: "zh_cn",
+            minHeight: 300,
+            imageUpload: true,
+            pastedImagesUploadRequestType: 'POST',
+            pastedImagesUploadURL: '/upload/img/base64',
+            imageUploadURL: '/docs/upload/file/img',
+            theme: "custom",
+            buttons: ["html", "bold", "italic", "underline", "createLink", "strikeThrough", "fontFamily", "fontSize", "color", "formatBlock", "align", "insertOrderedList", "insertUnorderedList", "outdent", "indent", "insertImage", "table", "insertHorizontalRule"]
+        });
+    });
+</script>
+{%endif%}
+<script>
+</script>
+{%  endblock %}

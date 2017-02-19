@@ -1,0 +1,47 @@
+{% extends "index.html" %}
+{% block css %}
+    <style>
+        .side {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+        .s01 {
+            width: 32px;
+            height: 32px;
+            display: inline-block;
+            vertical-align: top;
+            margin-top: 15px;
+            margin-right: 15px;
+        }
+    </style>
+{% endblock %}
+{% block main %}
+<div class="container projects">
+      <div class="row">
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> 主页</a></li>
+            <li><a href="{{ first_detail.d_id }}">{{ first_detail.name }}</a></li>
+            <li class="active">{{ sec_g_detail.name }}</li>
+        </ol>
+
+        <div class="col-md-2">
+            <ul>
+                {% for i in sec_g_list %}
+                    <li><a href="/{{ i.d_id }}"><div class="side"><div class="s01"></div>{{ i.name }}</div></a></li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col-md-10">
+            <ul>
+            {% for i in docs_list %}
+                <li><a href="/{{ i.d_id }}"><div class="side"><div class="s01"></div>{{ i.title }}</div></a></li>
+            {% endfor %}
+            </ul>
+{#            <div class="con_title">{{ doc_details.title }}</div>#}
+{#            <div class="con_time">日期：{{ doc_details.update_time }}</div>#}
+{#            <div class="content">{{ doc_details.details | safe }}</div>#}
+        </div>
+    </div>
+</div>
+{% endblock %}

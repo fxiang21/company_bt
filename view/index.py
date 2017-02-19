@@ -18,12 +18,12 @@ index = Blueprint('index', __name__)
 @index.route('', methods=['GET'])
 def index_page():
     try:
-        groups_db = data.NewsGroup.query()
-        groups = SqlResultConvert.to_list(groups_db)
+        # groups_db = data.NewsGroup.query()
+        # groups = SqlResultConvert.to_list(groups_db)
         news = dict()
-        for group in groups:
-            r, num = data.News.query_num(limit=5, desc="created", **{"group": group.get("ngid")})
-            news[group.get("ngid")] = SqlResultConvert.to_list(r)
+        # for group in groups:
+        #     r, num = data.News.query_num(limit=5, desc="created", **{"group": group.get("ngid")})
+        #     news[group.get("ngid")] = SqlResultConvert.to_list(r)
         return render_template('homepage.html', m_type='hp', news=news)
     except Exception as e:
         return jsonify(message=str(e))

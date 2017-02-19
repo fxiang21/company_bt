@@ -11,16 +11,7 @@ def markup(content):
 
 
 def auth(username, resource):
-    url = current_app.config['OPS_AUTH_URL'] % (username, resource)
-    try:
-        auth = requests.get(url).json()['auth']
-        if auth is not True and auth is not False:
-            raise Exception('auth system \' return is not expected.')
-    except Exception, e:
-        current_app.logger.error('auth user error: %s' % str(e))
-        current_app.logger.error('request url: %s' % url)
-        auth = False
-    return auth
+    return True
 
 
 def is_admin(obj):

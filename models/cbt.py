@@ -1,7 +1,7 @@
 # coding: utf-8
 from sqlalchemy import Column, DateTime, Integer, String, text
 from sqlalchemy.ext.declarative import declarative_base
-
+from sqlalchemy.dialects.mysql import LONGTEXT
 
 Base = declarative_base()
 metadata = Base.metadata
@@ -15,10 +15,8 @@ class News(Base):
     title = Column(String(256), nullable=False, server_default=text("''"))
     created = Column(DateTime)
     author = Column(String(45))
-    content = Column(String)
     url = Column(String(256))
-    tpl = Column(String(256))
-    img = Column(String(256))
+    content = Column(LONGTEXT)
 
 
 class NewsGroup(Base):

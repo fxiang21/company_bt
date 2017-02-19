@@ -1,0 +1,141 @@
+{% extends "layout1.html" %}
+
+{% block css %}
+<link href="/static/css/chatsbubble.css" rel="stylesheet" type="text/css">
+<!--<link href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">-->
+<link href="/static/css/docs.min.css" rel="stylesheet" type="text/css">
+<link href="../../static/libs/jquery-range/jquery.range.css" rel="stylesheet" type="text/css">
+<link href="../../static/css/questionnaire.css" rel="stylesheet" type="text/css">
+{% endblock %}
+
+
+{% block js %}
+{% endblock %}
+{% block main %}
+{%if not exist_qn%}
+    <div class="alert alert-danger alert-dismissible" role="alert">
+       <strong>提示:&nbsp;您所访问的问卷不存在</strong>
+    </div>
+{% elif num %}
+    <div class="alert alert-success alert-dismissible" role="alert">
+       <strong>提示:&nbsp;您已经提交过该问卷,谢谢您的积极参与</strong>
+    </div>
+{%else%}
+{% if quest_n%}
+<div id="before">
+    <h2 style="text-align: center">{{quest_n.title}}</h2>
+    <div class="surveydescription">
+            <span style="vertical-align: middle;">&nbsp;您好！<br>
+    &nbsp;&nbsp;&nbsp; 欢迎参加“运维产品满意度”的调查工作！此次调查是为了加强企业部门的组织建设而专门设计的，旨在通过对运维产品满意度的调查对运维产品的相关建设做出改进。希望你抽出一点时间积极配合我们的调查工作，谢谢你的参与。<br>
+    说明：<br>
+    本次调查采用匿名形式，我们将严格保密你的信息，你可以放心作答。</span>
+    </div>
+
+    <div style="margin-bottom: 20px">
+        {% if question%}
+        <div id="question_all">
+        {%for i in question%}
+        <div class="div_question form-control" id="q_{{i.q_id}}">
+            <div class="div_title_question_all">
+                <div class="div_topic_question"><b>{{loop.index}}.</b></div>
+                <div class="div_title_question">&nbsp;{{i.content}}</div>
+                <div style="clear:both;"></div>
+            </div>
+            <div class="div_table_radio_question">
+                <div class="div_table_clear_top"></div>
+                {% if i.qtype == 6%}
+                <div style="padding-bottom: 20px">
+                    <input type="text" class="single-slider" value="50" />
+                </div>
+                {% elif i.qtype == 3%}
+                <div>
+                    <input type="text" class="form-control">
+                </div>
+                {%else%}
+                <ul class="ulradiocheck">
+                    {% for j in items[i.q_id] %}
+                    <li style="width: 99%;">
+                        {% if i.qtype == 2%}
+                        <input type="checkbox" value="{{j.i_id}}">
+                        <label>{{j.content}}</label>
+                        {% elif i.qtype == 3%}
+                        <label>{{j.content}}</label>
+                        <input type="text" class="form-control">
+                        {% elif i.qtype == 4%}
+                            {% if j.supplement%}
+                            <label>{{j.content}}</label>
+                            <input type="text" class="form-control">
+                            {%else%}
+                            <input type="checkbox" value="{{j.i_id}}">
+                            <label >{{j.content}}</label>
+                            {%endif%}
+                        {% elif i.qtype == 5%}
+                            {% if j.supplement%}
+                            <label >{{j.content}}</label>
+                            <input type="text" class="form-control">
+                            {%else%}
+                            <input type="radio" name="q{{i.q_id}}" value="{{j.i_id}}">
+                            <label>{{j.content}}</label>
+                            {%endif%}
+                        {%else%}
+                        <input name="q{{i.q_id}}" type="radio" value="{{j.i_id}}">
+                        <label >{{j.content}}</label>
+                        {%endif%}
+                    </li>
+                    {%endfor%}
+                    <div style="clear:both;"></div>
+                </ul>
+                {%endif%}
+                <div style="clear:both;"></div>
+            </div>
+        </div>
+        {%endfor%}
+        {%if quest_n.qn_id == 2%}
+
+        {%endif%}
+        </div>
+        <div style="text-align: center">
+            <input type="button" class="btn btn-success btn" onclick="Answer('{{quest_n.qn_id}}')" value="提交" style="border-radius: 5px">
+        </div>
+        <div id="answer_tips" style="text-align: center">&nbsp;</div>
+        {%else%}
+        <div class="alert alert-success alert-dismissible" role="alert">
+           <strong>提示:&nbsp;暂时没有问题</strong>
+        </div>
+        {%endif%}
+    </div>
+</div>
+<div id="after" style="display: none">
+    <div class="alert alert-success alert-dismissible" role="alert">
+        <strong id="rep_tips"></strong>
+    </div>
+</div>
+{%else%}
+<div class="alert alert-success alert-dismissible" role="danger">
+      <strong>提示:&nbsp;暂时没有找到该问卷</strong>
+</div>
+{%endif%}
+{%endif%}
+<!--<embed id="plugin" type="application/x-google-chrome-pdf" src="/static/docs/{{name}}.pdf"></embed>-->
+{% endblock %}
+{% block script %}
+<script type="text/javascript" src="../../static/js/questionnaire.js"></script>
+<script type="text/javascript" src="../../static/libs/jquery-range/jquery.range.js"></script>
+<script>
+$(function(){
+	$('.single-slider').jRange({
+		from: 0,
+		to: 100,
+		step: 1,
+		scale: [0,25,50,75,100],
+		format: '%s',
+		showLabels: true,
+		showScale: true,
+        width:window.screen.width * 2 / 3
+	});
+});
+</script>
+{% endblock %}
+
+
+

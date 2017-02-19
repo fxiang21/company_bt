@@ -1,0 +1,141 @@
+{% extends "layout.html" %}
+
+{% block css %}
+<link href="../../static/libs/froala/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<link href="../../static/libs/froala/css/froala_editor.min.css" rel="stylesheet" type="text/css">
+{% endblock %}
+
+{% block js %}
+{% endblock %}
+{% block main %}
+<h3 class="header smaller lighter blue">文档编辑</h3>
+<div class="col-sm-12" style="margin-bottom: 20px">
+    {% if finished%}
+        {% if return_code == 200%}
+        <div class="alert alert-success alert-dismissible">
+              <strong>提示:&nbsp;操作成功</strong>
+        </div>
+        {%elif return_code == 409%}
+        <div class="alert alert-danger alert-dismissible">
+              <strong>提示:&nbsp;操作失败,当前文档内容已不是最新版本，建议备份您的更改，并刷新页面再次更新</strong>
+        </div>
+        {%else%}
+        <div class="alert alert-danger alert-dismissible">
+              <strong>提示:&nbsp;操作失败</strong>
+        </div>
+        {%endif%}
+    {%else%}
+    <form class="box-body box-padding" method="POST" action="/docs/edit" enctype="multipart/form-data"
+          onsubmit="return doc_edit_check()">
+            <div class="form-group col-md-6 col-xs-12">
+              <label for="first_group" class="control-label"><span style="color: red">*</span>版块</label>
+              <div>
+                <select id="first_group" class="form-control" name="first_group" {%if not allowed_edit%}disabled{%endif%}
+                        onchange="secGroup(this, 'sec_group')" required="">
+                    {%if doc_details%}
+                        {% for i in groups%}
+                            {% if i.d_id == first_group_id%}
+                            <option value="{{i.d_id}}" selected>{{i.name}}</option>
+                            {%else%}
+                            <option value="{{i.d_id}}">{{i.name}}</option>
+                            {%endif%}
+                        {% endfor%}
+                    {% else %}
+                        {% for i in groups%}
+                        <option value="{{i.d_id}}">{{i.name}}</option>
+                        {% endfor%}
+                    {%endif%}
+                </select>
+              </div>
+            </div>
+            <div class="form-group col-md-6 col-xs-12">
+                <label for="sec_group" class="control-label"><span style="color: red">*</span>分类</label>
+                <span id="sec_group_tips"></span>
+                <div>
+                    <select id="sec_group" name="sec_group" class="form-group col-md-12 col-xs-12"
+                    {%if not allowed_edit%}disabled{%endif%}>
+                        {%for i in sec_groups %}
+                        {%if i.id == doc_details.group_id%}
+                        <option value="{{i.id}}" selected>{{i.name}}</option>
+                        {%else%}
+                        <option value="{{i.id}}" >{{i.name}}</option>
+                        {%endif%}
+                        {%endfor%}
+                    </select>
+                </div>
+            </div>
+            <div class="form-group col-md-6 col-xs-12">
+                <label for="title" class="control-label"><span style="color: red">*</span>标题</label>
+                <span id="title_tips"></span>
+                <input id="title" name="title" type="text" autocomplete="off"  class="form-control" required
+                       {%if not allowed_edit%}disabled{%endif%}
+                        value="{%if doc_details%}{{doc_details.title}}{%endif%}"/>
+            </div>
+            <div class="form-group col-md-6 col-xs-12">
+                <label for="comment" class="control-label">文档说明</label>
+              <div>
+                <input id="comment" name="comment" class="form-control" {%if not allowed_edit%}disabled{%endif%}
+                       value="{%if doc_details%}{{doc_details.comment}}{%endif%}"/>
+              </div>
+            </div>
+            <div class="form-group col-md-12 col-xs-12">
+              <div>
+                <textarea id="details" name="details">
+                    {% if doc_details%}
+                    {{doc_details.details | safe}}
+                    {%endif%}
+                </textarea>
+              </div>
+            </div>
+            <div class="form-group col-md-6 col-xs-12" style="display: none">
+                <input id="doc_id" name="d_id" type="text" class="form-control"
+                       value="{%if doc_details%}{{doc_details.d_id}}{%endif%}"/>
+            </div>
+            <div class="form-group col-md-6 col-xs-12" style="display: none">
+                <input id="doc_md5" name="doc_md5" type="text" class="form-control"
+                       value="{{doc_md5}}"/>
+            </div>
+            {%if allowed_edit%}
+            <div class="form_group col-md-12 col-xs-12" style="text-align: center">
+                <input type="submit" class="btn btn-primary" value="保存提交"/>
+            </div>
+            <div style="text-align: center">
+                <span id="commit_tips">&emsp;</span>
+            </div>
+            {%endif%}
+        </form>
+    {%endif%}
+</div>
+{% endblock %}
+{% block script %}
+{%if not finished%}
+<script type="text/javascript" src="../../static/libs/froala/js/froala_editor.min.js"></script>
+<!--[if lt IE 9]>
+<script type="text/javascript" src="../../static/libs/froala/js/froala_editor_ie8.min.js"></script>
+<![endif]-->
+<script type="text/javascript" src="../../static/libs/froala/js/plugins/tables.min.js"></script>
+<script type="text/javascript" src="../../static/libs/froala/js/plugins/lists.min.js"></script>
+<script type="text/javascript" src="../../static/libs/froala/js/plugins/colors.min.js"></script>
+<script type="text/javascript" src="../../static/libs/froala/js/plugins/media_manager.min.js"></script>
+<script type="text/javascript" src="../../static/libs/froala/js/plugins/font_family.min.js"></script>
+<script type="text/javascript" src="../../static/libs/froala/js/plugins/font_size.min.js"></script>
+<script type="text/javascript" src="../../static/libs/froala/js/plugins/block_styles.min.js"></script>
+<script type="text/javascript" src="../../static/js/doc.js"></script>
+
+<script>
+    $(function() {
+        $('#details').editable({
+            inlineMode: false,
+            language: "zh_cn",
+            minHeight: 300,
+            imageUpload: true,
+            pastedImagesUploadRequestType: 'POST',
+            pastedImagesUploadURL: '/upload/img/base64',
+            imageUploadURL: '/docs/upload/file/img',
+            theme: "custom",
+            buttons: ["html", "bold", "italic", "underline", "createLink", "strikeThrough", "fontFamily", "fontSize", "color", "formatBlock", "align", "insertOrderedList", "insertUnorderedList", "outdent", "indent", "insertImage", "table", "insertHorizontalRule"]
+        });
+    });
+</script>
+{%endif%}
+{%  endblock %}

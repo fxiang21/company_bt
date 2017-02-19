@@ -1,120 +1,213 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8">
-    <title>网站服务监控</title>
-    <!-- Tell the browser to be responsive to screen width -->
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-   <link rel="icon" href="{{ url_for('static', filename='img/logo.png') }}" type="image/x-icon">
-    <!-- Bootstrap 3.3.5 -->
-    <link rel="stylesheet" href="{{ url_for('static',filename='bootstrap/css/bootstrap.min.css')}}">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/font-awesome.min.css') }}">
-    <!-- Ionicons -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/ionicons.min.css') }}">
-    <!-- Theme style -->
-    <link rel="stylesheet" href = "{{ url_for('static', filename='dist/css/AdminLTE.min.css') }}">
-    <!-- AdminLTE Skins. Choose a skin from the css/skins
-         folder instead of downloading all of them to reduce the load. -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='dist/css/skins/_all-skins.min.css') }}">
+<html lang="en">
+    <head>
+		<meta charset="utf-8" />
+		<title>管理后台</title>
+		<!-- basic styles -->
+		<link href="/static/libs/ace/css/bootstrap.min.css" rel="stylesheet" />
+{#        <link href="/static/libs/sb-admin-2/font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">#}
+		<link rel="stylesheet" href="/static/libs/ace/css/font-awesome.min.css" />
+        <link rel="stylesheet" href="/static/libs/ace/css/bootstrap.min.css">
+		<!-- ace styles -->
+		<link rel="stylesheet" href="/static/libs/ace/css/ace.min.css" />
+		<link rel="stylesheet" href="/static/libs/ace/css/ace-rtl.min.css" />
+		<link rel="stylesheet" href="/static/libs/ace/css/ace-skins.min.css" />
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-    {%- assets "css_common" %}
-        <link rel="stylesheet" href="{{ ASSET_URL }}"/>
-    {%- endassets %}
-  <style>
-      body{
-          background-color: #222d32;
-      }
-      .nav-active {
-          background-color: lightslategrey;
-      }
-      .appname{
-          font-size:25px;
-          font-family: -webkit-pictograph;
-          padding;
-      }
-  </style>
- <script> $SCRIPT_ROOT={{ request.script_root|tojson|safe }} </script>
-<script src="{{ url_for('static', filename='plugins/jquery/jquery-2.1.4.min.js') }}"></script>
-<script src="{{ url_for('static', filename='js/common.js') }}"></script>
-<script src="{{ url_for('static', filename='plugins/sweetalert/sweetalert.min.js')}}"></script>
-<script src="{{ url_for('static', filename='plugins/jquery/jquery-ui.min.js') }}"></script>
-<script>
-    $.widget.bridge('uitooltip', $.ui.tooltip);
-</script>
-<script src="{{ url_for('static', filename='bootstrap/js/bootstrap.min.js') }}"></script>
+        <script src="/static/js/jquery.js"></script>
+		<script src="/static/libs/ace/js/ace-extra.min.js"></script>
+        <script src="/static/libs/ace/js/ace.min.js"></script>
+        <script src="/static/js/index.js"></script>
 
-      {% block css %}
-      {% endblock %}
-  </head>
-  <!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
-  <body class="skin-purple layout-top-nav">
-    <div class="wrapper">
+        <style>
 
-      <header class="main-header">
-        <nav class="navbar navbar-static-top">
-          <div class="">
-            <div class="navbar-header">
-              <a href="{{ url_for('index.index_page') }}" class="navbar-brand">
-                  <b class="appname">SAM</b><small>&nbsp;(Site Availability Monitor)</small>
-              </a>
-              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
-                <i class="fa fa-bars"></i>
-              </button>
-            </div>
+            .navbar{
+                background: #FF9E35
+            }
 
-            <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
-              <ul class="nav navbar-nav">
-                <li {% if menu == "monitor" %} class="nav-active"{% endif %}><a href="{{ url_for('monitor.index_page') }}">监控</a></li>
-{#                <li><a href="/alarm">告警</a></li>#}
-{#                <li><a href="/history">历史</a></li>#}
-                <li {% if menu == "config" %} class="nav-active"{% endif %}><a href="{{ url_for('config.team_page') }}">配置</a></li>
-                <!--<li class="dropdown">-->
-                  <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>-->
-                  <!--<ul class="dropdown-menu" role="menu">-->
-                    <!--<li><a href="#">Action</a></li>-->
-                    <!--<li><a href="#">Another action</a></li>-->
-                    <!--<li><a href="#">Something else here</a></li>-->
-                    <!--<li class="divider"></li>-->
-                    <!--<li><a href="#">Separated link</a></li>-->
-                    <!--<li class="divider"></li>-->
-                    <!--<li><a href="#">One more separated link</a></li>-->
-                  <!--</ul>-->
-                <!--</li>-->
-              </ul>
-            </div>
-            <!-- Navbar Right Menu -->
-              <div class="navbar-custom-menu">
-                <ul class="nav navbar-nav">
+            .qq_tip{
+                font-weight: bold;
+                display: inline-block;
+                position: absolute;
+                right: 300px;
+                font-size: 14px;
+            }
 
-                  <!-- User Account Menu -->
-                    <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">{{ g.user.nickname }} <span class="caret"></span></a>
-                      <ul class="dropdown-menu" role="menu">
-                        <li><a href="{{ url_for('cas.logout') }}">退出</a></li>
-                      </ul>
-                    </li>
-                </ul>
-              </div><!-- /.navbar-custom-menu -->
-        </nav>
-      </header>
-      {% block main%}
-      {% endblock %}
-    <div id="optip">
-        <table>
-            <tr><td id="op-content"></td></tr>
-        </table>
-    </div>
-    </div>
-  {% block js %}
-  {% endblock %}
-  {% block script %}
-  {% endblock %}
-  </body>
+            body,
+            #navbar{
+                margin-right: 0px !important;
+            }
+        </style>
+	</head>
+
+	<body>
+		<div class="navbar navbar-default" id="navbar">
+			<script type="text/javascript">
+				try{ace.settings.check('navbar' , 'fixed')}catch(e){}
+			</script>
+
+			<div class="navbar-container" id="navbar-container">
+				<div class="navbar-header pull-left">
+					<a href="#" class="navbar-brand">
+						<small>
+                            <span class="logo"></span>管理后台
+						</small>
+					</a><!-- /.brand -->
+				</div><!-- /.navbar-header -->
+
+				<div class="navbar-header pull-right" role="navigation">
+					<ul class="nav ace-nav">
+                        <li class="green">
+                            <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&amp;uin=306076164&amp;site=qq&amp;menu=yes">
+                                <i class="fa fa-qq"></i>联系开发</a>
+						</li>
+
+						<li class="light-blue">
+							<a data-toggle="dropdown" href="#" class="dropdown-toggle">
+                                <i class="icon-user"></i>
+								<!--<img class="nav-user-photo" src="/static/libs/ace/avatars/user.jpg" alt="Jason's Photo" />-->
+								<span class="user-info">
+									<small>欢迎</small>
+									{%if session.CAS_USERNAME%}{{session.CAS_NAME}}{%endif%}
+								</span>
+
+								<!--<i class="icon-caret-down"></i>-->
+							</a>
+
+							<!--<ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">-->
+								<!--<li>-->
+									<!--<a href="#">-->
+										<!--<i class="icon-cog"></i>-->
+										<!--Settings-->
+									<!--</a>-->
+								<!--</li>-->
+
+								<!--<li>-->
+									<!--<a href="#">-->
+										<!--<i class="icon-user"></i>-->
+										<!--Profile-->
+									<!--</a>-->
+								<!--</li>-->
+
+								<!--<li class="divider"></li>-->
+
+								<!--<li>-->
+									<!--<a href="#">-->
+										<!--<i class="icon-off"></i>-->
+										<!--Logout-->
+									<!--</a>-->
+								<!--</li>-->
+							<!--</ul>-->
+						</li>
+
+					</ul><!-- /.ace-nav -->
+				</div><!-- /.navbar-header -->
+			</div><!-- /.container -->
+		</div>
+
+		<div class="main-container" id="main-container">
+			<script type="text/javascript">
+				try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+			</script>
+
+			<div class="main-container-inner">
+				<a class="menu-toggler" id="menu-toggler" href="#">
+					<span class="menu-text"></span>
+				</a>
+
+				<div class="sidebar" id="sidebar">
+					<script type="text/javascript">
+						try{ace.settings.check('sidebar' , 'fixed')}catch(e){}
+					</script>
+
+					<ul class="nav nav-list">
+
+                        <li class="{% if active_item == 'docs'%}active{% endif %}">
+							<a href="/docs">
+								<i class="icon-file"></i>
+								<span class="menu-text"> 文档中心 </span>
+							</a>
+						</li>
+					</ul><!-- /.nav-list -->
+					<div class="sidebar-collapse" id="sidebar-collapse">
+						<i class="icon-double-angle-left" data-icon1="icon-double-angle-left"
+                           data-icon2="icon-double-angle-right" onclick="$('#copyright').toggle()"></i>
+					</div>
+                    <div id="copyright" class="text-center" style="margin: 10px 1px">
+                        <div id="sys_time" class="version"></div>
+                        <div class="version"><i class="fa fa-copyright"></i>&nbsp;百统&nbsp;</div>
+                    </div>
+					<script type="text/javascript">
+						try{ace.settings.check('sidebar' , 'collapsed')}catch(e){}
+					</script>
+				</div>
+
+				<div class="main-content">
+					<div class="breadcrumbs" id="breadcrumbs">
+						<script type="text/javascript">
+							try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+						</script>
+
+						<ul class="breadcrumb">
+							<li>
+								<i class="icon-home home-icon"></i>
+								<a href="/">主页</a>
+							</li>
+
+							<!--<li>-->
+								<!--<a href="#">Other Pages</a>-->
+							<!--</li>-->
+							<!--<li class="active">Blank Page</li>-->
+						</ul><!-- .breadcrumb -->
+
+{#						<div class="nav-search" id="nav-search">#}
+{#							<form class="form-search">#}
+{#								<span class="input-icon">#}
+{#									<input type="text" placeholder="developing ..." class="nav-search-input" id="nav-search-input1" autocomplete="off" />#}
+{#									<i class="icon-search nav-search-icon"></i>#}
+{#								</span>#}
+{#							</form>#}
+{#						</div><!-- #nav-search -->#}
+					</div>
+
+                   {% block main %}
+                   {% endblock %}
+
+				</div><!-- /.main-content -->
+
+			</div><!-- /.main-container-inner -->
+
+		</div><!-- /.main-container -->
+
+		<!-- basic scripts -->
+
+		<script type="text/javascript">
+			if("ontouchend" in document) document.write("<script src='/static/libs/ace/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+		</script>
+		<script src="/static/libs/ace/js/bootstrap.min.js"></script>
+		<script src="/static/libs/ace/js/typeahead-bs2.min.js"></script>
+
+		<!-- page specific plugin scripts -->
+
+		<!-- ace scripts -->
+
+		<script src="/static/libs/ace/js/ace-elements.min.js"></script>
+		<!--<script src="/static/libs/ace/js/ace.min.js"></script>-->
+        <script>
+            $(function() {
+                $("#sys_time").html((new Date()).toLocaleDateString() + " " + (new Date()).toLocaleTimeString());
+                myID = window.setInterval('$("#sys_time").html((new Date()).toLocaleDateString()' +
+                        ' + " " + (new Date()).toLocaleTimeString())',1000);
+            });
+        </script>
+
+		<!-- inline scripts related to this page -->
+
+{% block css %}
+{% endblock %}
+
+{% block script %}
+{% endblock %}
+
+
+	</body>
 </html>
