@@ -7,7 +7,7 @@ from multiprocessing import cpu_count
 class GunicornServer(Command):
     description = 'Run the app within Gunicorn'
 
-    def __init__(self, host='127.0.0.1', port=5000, workers=cpu_count() * 2 + 1, worker_class="sync", daemon=False):
+    def __init__(self, host='0.0.0.0', port=5000, workers=9, worker_class="sync", daemon=False):
         self.port = port
         self.host = host
         self.workers = workers
