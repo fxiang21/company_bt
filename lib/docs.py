@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 #encoding=utf-8
 
-__author__ = 'xiangfeng'
 
 from datetime import datetime, date
 from sqlalchemy import and_, func
@@ -11,22 +10,51 @@ from flask import current_app
 from models.docs import DocGroup, DocRelation, DocResponse, DocsInfo
 from sqlalchemy import or_
 import hashlib
+from lib import bean
+# from models.docs import DocGroup, DocRelation, DocsInfo
+
+__author__ = 'xiangfeng'
+
+
+# class DocGroupManager(bean):
+#     _tbl = DocGroup
+#     _id = 'd_id'
+#
+#     def __init__(self):
+#         self.tbl = DocGroup()
+#
+#
+# class DocRelationManager(bean):
+#     _tbl = DocRelation
+#     _id = 'd_id'
+#     tid = 'd_id'
+#
+#     def __init__(self):
+#         self.tbl = DocRelation()
+#
+#
+# class DocsInfoManager(bean):
+#     _tbl = DocsInfo
+#     _id = 'd_id'
+#     tid = 'd_id'
+#
+#     def __init__(self):
+#         self.tbl = DocsInfo()
 
 
 class DocManage():
     def __init__(self):
         pass
 
-    # @staticmethod  # 查询文档信息
-    # def doc_info(offset_number, per_page, **kwargs):
-    #     tmp_result = db.session.query(DocsInfo)
-    #     for i in kwargs:
-    #         if hasattr(DocsInfo(), i):
-    #             tmp_result = tmp_result.filter(getattr(DocsInfo(), i) == kwargs[i])
-    #     tmp_result = tmp_result.group_by(DocsInfo.title).order_by(DocsInfo.update_time.desc())
-    #     total_number = tmp_result.count()
-    #     result = tmp_result.offset(offset_number).limit(per_page).all()
-    #     return total_number, result
+    @staticmethod  # 查询文档信息
+    def doc_group_info(**kwargs):
+        tmp_result = db.session.query(DocGroup)
+        for i in kwargs:
+            if hasattr(DocGroup(), i):
+                tmp_result = tmp_result.filter(getattr(DocGroup, i) == kwargs[i])
+        total_number = tmp_result.count()
+        result = tmp_result.all()
+        return total_number, result
 
     @staticmethod  # 分类查询文档信息
     def doc_info(offset_number, per_page, group, **kwargs):
@@ -110,7 +138,8 @@ class DocManage():
         res = list()
         for i in r:
             res.append({'id': i.d_id,
-                        'name': i.name})
+                        'name': i.name,
+                        'description': i.description})
         return res
 
     @staticmethod

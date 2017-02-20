@@ -1,14 +1,15 @@
 #!/usr/bin/env python
 #encoding=utf-8
 
-__author__ = 'xiangfeng'
 
+from extensions import db
+from sqlalchemy.dialects.mysql import LONGTEXT
 import sys
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
-from extensions import db
-from sqlalchemy.dialects.mysql import LONGTEXT
+__author__ = 'xiangfeng'
+
 
 class DocsInfo(db.Model):
     __tablename__ = "docs_info"

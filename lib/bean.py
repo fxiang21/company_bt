@@ -14,7 +14,6 @@ sys.setdefaultencoding('utf-8')
 class Bean(object):
     _tbl = ''
     _id = 'id'
-    tid = 'id'
 
     def __init__(self):
         self.tbl = ''

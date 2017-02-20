@@ -312,7 +312,7 @@ def docs_edit():
         doc_details['title'] = res.get('title', '')
         doc_details['comment'] = res.get('comment', '')
         doc_details['author'] = session.get('CAS_USERNAME', '')
-        doc_details['docs_type'] = 'DOC'
+        doc_details['docs_type'] = 'HTML'
         doc_details['update_time'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         doc_md5 = res.get('doc_md5', '')
         d_id = res.get('d_id', '')
