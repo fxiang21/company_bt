@@ -171,6 +171,7 @@ def doc_sec_groups_add():
     rels = dict()
     rels['group_id'] = request.values.get('first_group')
     rels['name'] = request.values.get('sec_group')
+    rels['description'] = request.values.get('group_desc','')
     sta, sec_id = doc_manager.new_docs_rel(**rels)
     return jsonify(status=sta)
 

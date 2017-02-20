@@ -121,10 +121,12 @@ function doc_edit_check(){
 function inputGroup(){
     var first_group = $('#new_first_group').val();
     var sec_group = $('#new_sec_group').val();
+    var group_desc = $('#new_group_desc').val();
     $.post('/docs/sec_groups/add',
         {
             first_group:first_group,
-            sec_group:sec_group
+            sec_group:sec_group,
+            group_desc:group_desc
         },function(resp){
             if(!resp.status){
                 responseTips('new_group_input_tips', '添加失败', 'red', 3);
