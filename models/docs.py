@@ -46,6 +46,7 @@ class DocRelation(db.Model):
 
     group_id = db.Column(db.SmallInteger, db.ForeignKey("doc_group.d_id"), primary_key=True)
     name = db.Column(db.String(64), nullable=False)
+    description = db.Column(db.Text, nullable=False)
 
     __table_args__ = (db.UniqueConstraint("group_id", "name", name="group_id_name"), )
 
