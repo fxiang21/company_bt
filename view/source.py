@@ -16,7 +16,7 @@ doc_manager = DocManage()
 
 
 @source.route('/', methods=['GET'])
-def index_page():
+def index():
     return render_template("detail/index.html")
 
 
@@ -40,7 +40,7 @@ def index_page(item):
 
 
 @source.route('/detail/<fid>', methods=['GET'])
-def index_page(fid):
+def source_detail(fid):
     f = doc_manager.docs_details(fid)
     if not f:
         pass
@@ -75,10 +75,6 @@ def list_sec(sec_id):
     sec_g_detail = doc_manager.group_sec_detail(sec_id)
     first_detail = doc_manager.group_detail(sec_g_detail.get('group_id'))
     sec_g_list = doc_manager.doc_groups_sec_ids(sec_g_detail.get('group_id'))
-    print docs_list
-    print sec_g_detail
-    print first_detail
-    print sec_g_list
     return render_template('content/list_detail.html', docs_list=docs_list, sec_g_detail=sec_g_detail,
                            first_detail=first_detail, sec_g_list=sec_g_list)
 

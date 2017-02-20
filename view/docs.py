@@ -123,7 +123,7 @@ def docs_input():
 
 
 @docs.route('/delete', methods=['GET', 'POST'])
-def docs_input():
+def docs_delete():
     d_id = request.values.get('d_id')
     sta = doc_manager.delete_info(d_id)
     return jsonify(code=sta)
@@ -167,7 +167,7 @@ def doc_sec_groups():
 
 
 @docs.route('/sec_groups/add', methods=['POST'])
-def doc_sec_groups():
+def doc_sec_groups_add():
     rels = dict()
     rels['group_id'] = request.values.get('first_group')
     rels['name'] = request.values.get('sec_group')
