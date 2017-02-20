@@ -1,13 +1,13 @@
 # encoding=utf-8
 
 from flask_script import Command, Option
+from multiprocessing import cpu_count
 
 
 class GunicornServer(Command):
     description = 'Run the app within Gunicorn'
 
-    def __init__(self, host='127.0.0.1', port=5000, workers=9, worker_class="sync", daemon=False):
-        print '........'
+    def __init__(self, host='127.0.0.1', port=5000, workers=cpu_count() * 2 + 1, worker_class="sync", daemon=False):
         self.port = port
         self.host = host
         self.workers = workers
@@ -15,7 +15,6 @@ class GunicornServer(Command):
         self.daemon = daemon
 
     def get_options(self):
-        print '33333333'
         return (
             Option('-H', '--host',
                    dest='host',
@@ -36,15 +35,16 @@ class GunicornServer(Command):
                    type=str,
                    default=self.worker_class),
 
-            Option("-d", "--daamon",
+            Option("-d", "--daemon",
                    dest="daemon",
                    type=bool,
                    default=self.daemon)
         )
 
-    def run(self, *args):
-        print '22222222222'
-        app, host, port, workers, worker_class, daemon = args
+    def __call__(self, app, host, port, workers, worker_class, daemon):
+        print "......"
+        # print args
+        # app, host, port, workers, worker_class, daemon = args
 
         from gunicorn import version_info
 
@@ -55,8 +55,7 @@ class GunicornServer(Command):
             arbiter = Arbiter(Config({'bind': "%s:%d" % (host, int(port)),
                                       'workers': workers,
                                       'worker_class': worker_class,
-                                      'daemon': daemon,
-                                      'timeout': 3600}),
+                                      'daemon': daemon}),
                               app)
             arbiter.run()
         else:
@@ -68,10 +67,10 @@ class GunicornServer(Command):
                         'bind': '{0}:{1}'.format(host, port),
                         'workers': workers,
                         'worker_class': worker_class,
-                        'daemon': daemon,
-                        'timeout': 3600
+                        'daemon': daemon
                     }
 
                 def load(self):
                     return app
+
             FlaskApplication().run()
