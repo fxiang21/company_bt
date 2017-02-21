@@ -326,7 +326,6 @@ def docs_edit():
                     edit_info['user'] = session.get('CAS_USERNAME')
                     edit_info['content'] = doc_details['details']
                     edit_info['start_time'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-                    sta = doc_manager.add_doc_edit_status(**edit_info)
                     return_code = 200
                 else:
                     finished = True
