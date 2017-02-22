@@ -45,7 +45,6 @@ def source_detail(fid):
     if not f:
         pass
     else:
-        print '.......'
         sec_id = f.group_id
         sec_g_detail = doc_manager.group_sec_detail(sec_id)
         first_detail = doc_manager.group_detail(sec_g_detail.get('group_id'))

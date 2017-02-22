@@ -54,14 +54,14 @@ window.onload=function ()
 	{
 		var oEvent=window.event || ev;
 
-		mouseX=oEvent.clientX-(oDiv.offsetLeft+oDiv.offsetWidth/5);
-		mouseY=oEvent.clientY-(oDiv.offsetTop+oDiv.offsetHeight/5);
+		mouseX=oEvent.clientX-(oDiv.offsetLeft+oDiv.offsetWidth/2);
+		mouseY=oEvent.clientY-(oDiv.offsetTop+oDiv.offsetHeight/2);
 
 		mouseX/=5;
 		mouseY/=5;
 	};
 
-	setInterval(update, 100);
+	setInterval(update, 30);
 };
 
 function update()
@@ -167,7 +167,7 @@ function positionAll()
 	var aTmp=[];
 	var oFragment=document.createDocumentFragment();
 
-	
+
 	for(i=0;i<aA.length;i++)
 	{
 		aTmp.push(aA[i]);
@@ -204,21 +204,21 @@ function positionAll()
 		mcList[i-1].cy = radius * Math.sin(theta)*Math.sin(phi);
 		mcList[i-1].cz = radius * Math.cos(phi);
 
-		aA[i-1].style.left=mcList[i-1].cx+oDiv.offsetWidth/5-mcList[i-1].offsetWidth/5+'px';
-		aA[i-1].style.top=mcList[i-1].cy+oDiv.offsetHeight/5-mcList[i-1].offsetHeight/5+'px';
+		aA[i-1].style.left=mcList[i-1].cx+oDiv.offsetWidth/2-mcList[i-1].offsetWidth/2+'px';
+		aA[i-1].style.top=mcList[i-1].cy+oDiv.offsetHeight/2-mcList[i-1].offsetHeight/2+'px';
 	}
 }
 
 function doPosition()
 {
-	var l=oDiv.offsetWidth/5;
-	var t=oDiv.offsetHeight/5;
+	var l=oDiv.offsetWidth/2;
+	var t=oDiv.offsetHeight/2;
 	for(var i=0;i<mcList.length;i++)
 	{
-		aA[i].style.left=mcList[i].cx+l-mcList[i].offsetWidth/5+'px';
-		aA[i].style.top=mcList[i].cy+t-mcList[i].offsetHeight/5+'px';
+		aA[i].style.left=mcList[i].cx+l-mcList[i].offsetWidth/2+'px';
+		aA[i].style.top=mcList[i].cy+t-mcList[i].offsetHeight/2+'px';
 
-		aA[i].style.fontSize=Math.ceil(12*mcList[i].scale/5)+8+'px';
+		aA[i].style.fontSize=Math.ceil(12*mcList[i].scale/2)+8+'px';
 
 		aA[i].style.filter="alpha(opacity="+100*mcList[i].alpha+")";
 		aA[i].style.opacity=mcList[i].alpha;
