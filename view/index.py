@@ -21,9 +21,6 @@ doc_manager = DocManage()
 @index.route('', methods=['GET'])
 def index_page():
     try:
-        import time
-        print '......'
-        print time.time()
         # groups_db = data.NewsGroup.query()
         # groups = SqlResultConvert.to_list(groups_db)
         news = dict()
@@ -31,14 +28,8 @@ def index_page():
         #     r, num = data.News.query_num(limit=5, desc="created", **{"group": group.get("ngid")})
         #     news[group.get("ngid")] = SqlResultConvert.to_list(r)
         total_number_2, docs_list_1 = doc_manager.doc_info("", 5, "", **{"group_id": 28})
-        print time.time()
         total_number_1, docs_list_2 = doc_manager.doc_info("", 5, "", **{"group_id": 25})
-        print time.time()
         total_number_3, docs_list_3 = doc_manager.doc_info("", 5, "", **{"group_id": 29})
-        print time.time()
-        print docs_list_1
-        print docs_list_2
-        print docs_list_3
         return render_template('homepage.html', m_type='hp', news=news, docs_list_1=docs_list_1,
                                docs_list_2=docs_list_2, docs_list_3=docs_list_3)
     except Exception as e:
@@ -69,6 +60,16 @@ def detail(item):
 def profile():
     return render_template("deep_bt.html", m_type="deep_baitong")
 
+
+@index.route("items/second", methods=['GET'])
+def second_items():
+    alias = request.values.get('alias')
+    try:
+        r = doc_manager.sec_items(alias)
+        tpl = render_template('header/sec_items.html', r=r)
+    except Exception as e:
+        tpl = str(e)
+    return jsonify(tpl=tpl)
 
 
 

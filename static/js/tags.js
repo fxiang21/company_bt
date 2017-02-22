@@ -6,7 +6,7 @@ var active = false;
 var lasta = 1;
 var lastb = 1;
 var distr = true;
-var tspeed=10;
+var tspeed=100;
 var size=250;
 
 var mouseX=0;
@@ -40,28 +40,7 @@ window.onload=function ()
 
 	positionAll();
 
-	oDiv.onmouseover=function ()
-	{
-		active=true;
-	};
-
-	oDiv.onmouseout=function ()
-	{
-		active=false;
-	};
-
-	oDiv.onmousemove=function (ev)
-	{
-		var oEvent=window.event || ev;
-
-		mouseX=oEvent.clientX-(oDiv.offsetLeft+oDiv.offsetWidth/2);
-		mouseY=oEvent.clientY-(oDiv.offsetTop+oDiv.offsetHeight/2);
-
-		mouseX/=5;
-		mouseY/=5;
-	};
-
-	setInterval(update, 30);
+	setInterval(update, 100);
 };
 
 function update()
@@ -167,7 +146,7 @@ function positionAll()
 	var aTmp=[];
 	var oFragment=document.createDocumentFragment();
 
-
+	//�������
 	for(i=0;i<aA.length;i++)
 	{
 		aTmp.push(aA[i]);
@@ -199,7 +178,7 @@ function positionAll()
 			phi = Math.random()*(Math.PI);
 			theta = Math.random()*(2*Math.PI);
 		}
-		//
+		//����任
 		mcList[i-1].cx = radius * Math.cos(theta)*Math.sin(phi);
 		mcList[i-1].cy = radius * Math.sin(theta)*Math.sin(phi);
 		mcList[i-1].cz = radius * Math.cos(phi);

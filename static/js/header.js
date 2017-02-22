@@ -1,7 +1,18 @@
+
 jQuery(document).ready(function(){
+	var obj = $('.navigation-down').find('div[_t_nav]');
+	$.each(obj,function(index,val){
+		var name = $(val).attr('_t_nav');
+		$.get('/items/second',
+			{
+				alias:name
+			},
+			function(resp){
+			$('#' + name).html(resp.tpl);
+		});
+	});
 
 	var qcloud={};
-
 	$('[_t_nav]').hover(function(){
 
 		var _nav = $(this).attr('_t_nav');

@@ -3,7 +3,7 @@
 
 
 from datetime import datetime, date
-from sqlalchemy import and_, func
+from sqlalchemy import and_, func, outerjoin
 from extensions import db
 import collections
 from flask import current_app
@@ -167,6 +167,12 @@ class DocManage():
             if r:
                 first_name = r[0]
         return first_name, sec_name
+
+    @staticmethod
+    def sec_items(first_name):  # 根据一级分类名称获取二级分类信息
+        r = db.session.query(DocRelation.group_id, DocRelation.d_id, DocRelation.name).\
+            outerjoin(DocGroup, DocGroup.d_id == DocRelation.group_id).filter(DocGroup.alias == first_name).all()
+        return r
 
     @staticmethod
     def group_detail(_id):  # 根据组id获取一级分组详情

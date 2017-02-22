@@ -17,13 +17,16 @@
         font-size: 2.5em;
         color:#000000;
     }
+    .sol_items > span{
+        font-size: 4em;
+    }
     .sol_items ul{
         height: 160px;
     }
     .sol_items > ul > li{
         font-size: 1.3em;
-        color: #808080;
-        padding: 5px;
+        color: black;
+        text-align: left;
     }
     .sol_items > ul > li > span{
         color: #ff0000;
@@ -31,12 +34,10 @@
     .sol_icon{
         width: 100px !important;
         height: 100px;
-        /*text-align: center;*/
         vertical-align: middle;
         padding-top: 25px;
         color: darkred;
         border: 1px solid #000000;
-        font-size: 4em;
         border-radius: 50%;
         -webkit-border-radius:50%;-moz-border-radius:50%;-ms_border-radius:50%;
         display:inline-block;margin:0 5%; position:relative;
@@ -45,4 +46,12 @@
     .sol_icon:hover{
         background-color: rosybrown;
         cursor: pointer;
+    }
+
+    .solutions ul{
+        padding: 0;
+    }
+    .solutions ul li{
+        color: black;
+        text-align: left;
     }
