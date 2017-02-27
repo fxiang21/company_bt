@@ -1,9 +1,9 @@
 /*reset*/
-*{margin:0;padding:0;list-style-type:none;}
+/**{margin:0;padding:0;list-style-type:none;}*/
 a,img{border:0;}
 a{text-decoration:none;}
 a:hover{text-decoration:underline;}
-body{font:12px/180% Arial, Helvetica, sans-serif, "鏂板畫浣�";color:#333333;}
+/*body{font:12px/180% Arial, Helvetica, sans-serif, "鏂板畫浣�";color:#333333;}*/
 /*main css*/
 .main-im{position:fixed;right:10px;top:200px;z-index:1000;width:110px;height:272px;}
 .main-im .qq-a{display:block;width:106px;height:116px;font-size:14px;color:#0484cd;text-align:center;position:relative;}

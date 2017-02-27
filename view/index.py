@@ -7,6 +7,10 @@ from flask import Blueprint, redirect, render_template,request,jsonify,session, 
 from lib import db as data
 from lib.common import SqlResultConvert
 from lib import docs
+from config import REDIS,REDIS_SHANGQIAO
+import redis
+from lib.db import DefaultInfo
+from random import choice
 import sys
 reload(sys)
 sys.setdefaultencoding('utf-8')
@@ -16,6 +20,7 @@ __author__ = 'xiangfeng'
 
 index = Blueprint('index', __name__)
 doc_manager = DocManage()
+redis_cache = redis.Redis(host=REDIS['host'],port=REDIS['port'], db=REDIS['db'])
 
 
 @index.route('', methods=['GET'])
@@ -70,6 +75,27 @@ def second_items():
     except Exception as e:
         tpl = str(e)
     return jsonify(tpl=tpl)
+
+
+@index.route("shangqiao/url")
+def qiao_url():
+    """
+    随机获取百度商桥链接
+    :return:
+    """
+    try:
+        user = '__'.join([REDIS_SHANGQIAO, request.remote_addr])
+        url = redis_cache.get(user)
+        if not url:
+            r = DefaultInfo.query(**{'status': 'enabled', 'category': 'shangqiao'})
+            if r:
+                url = choice([i.content for i in r])
+                redis_cache.set(user, url)
+                redis_cache.expire(user, 3600)
+        return redirect(url)
+    except Exception as e:
+        return jsonify(message=e)
+
 
 
 

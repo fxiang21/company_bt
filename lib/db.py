@@ -34,3 +34,13 @@ class NewsGroup(Bean):
         self.tbl = model.NewsGroup()
 
 
+class DefaultInfo(Bean):
+
+    _tbl = model.DefaultInfo
+    _id = 'did'
+    tid = 'did'
+
+    def __init__(self):
+        super(DefaultInfo, self).__init__()
+        self.tbl = "did"
+
