@@ -7,7 +7,7 @@ from flask import Blueprint, redirect, render_template,request,jsonify,session, 
 from lib import db as data
 from lib.common import SqlResultConvert
 from lib import docs
-from config import REDIS,REDIS_SHANGQIAO
+from config import REDIS, REDIS_QQ
 import redis
 from lib.db import DefaultInfo
 from random import choice
@@ -77,17 +77,17 @@ def second_items():
     return jsonify(tpl=tpl)
 
 
-@index.route("shangqiao/url")
-def qiao_url():
+@index.route("url/<string:item>")
+def qiao_url(item):
     """
     随机获取百度商桥链接
     :return:
     """
     try:
-        user = '__'.join([REDIS_SHANGQIAO, request.remote_addr])
+        user = '__'.join([REDIS_QQ, request.remote_addr])
         url = redis_cache.get(user)
         if not url:
-            r = DefaultInfo.query(**{'status': 'enabled', 'category': 'shangqiao'})
+            r = DefaultInfo.query(**{'status': 'enabled', 'category': item})
             if r:
                 url = choice([i.content for i in r])
                 redis_cache.set(user, url)
