@@ -9,16 +9,6 @@
 {#        <h2>Bootstrap相关优质项目推荐</h2>#}
 {#        <p>这些项目或者是对Bootstrap进行了有益的补充，或者是基于Bootstrap开发的</p>#}
       </div>
-    {# 备注:修改本页内容,可以直接在下面的item_map中添加,注意字段item,和contents不能改变 #}
-    {% set item_map=
-        {
-            "example01":{"item":"精巧的JS图表绘制工具库","contents":"Chart.js是一个简单、面向对象、为设计者和开发者准备的图表绘制工具库。Chart.js是一个简单、面向对象、为设计者和开发者准备的图表绘制工具库。
-                  Chart.js是一个简单、面向对象、为设计者和开发者准备的图表绘制工具库。
-                  Chart.js是一个简单、面向对象、为设计者和开发者准备的图表绘制工具库。
-                  Chart.js是一个简单、面向对象、为设计者和开发者准备的图表绘制工具库。
-                  Chart.js是一个简单、面向对象、为设计者和开发者准备的图表绘制工具库。"}
-        }
-    %}
 
     {% if m_type == "" %}
     {% endif %}
@@ -28,6 +18,7 @@
         <div class="col-sm-6 col-md-4 col-lg-3 child_item">
           <div class="thumbnail" style="height: 336px;">
             <a href="#" target="_blank">
+                <img class="lazy child_item" src="../../static/images/items/classes/{{ i.name }}.png"></a>
                 <img class="lazy child_item" src="../../static/images/items/example01.png"></a>
             <div class="caption" style="text-align: center">
               <h3 style="color: darkred">{{ i.name }}
