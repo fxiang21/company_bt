@@ -16,10 +16,9 @@
       <div class="row">
       {% for i in sec_g_list %}
         <div class="col-sm-6 col-md-4 col-lg-3 child_item">
-          <div class="thumbnail" style="height: 336px;">
+          <div class="thumbnail" style="height: 366px;">
             <a href="#" target="_blank">
-                <img class="lazy child_item" src="../../static/images/items/classes/{{ i.name }}.png"></a>
-                <img class="lazy child_item" src="../../static/images/items/example01.png"></a>
+                <img class="lazy child_item sec_img" style="width: 100%;height: 156px" src="../../static/images/items/classes/{{ i.name }}.jpg"></a>
             <div class="caption" style="text-align: center">
               <h3 style="color: darkred">{{ i.name }}
               </h3>
@@ -35,4 +34,11 @@
       {% endfor %}
     </div>
 </div>
+{% endblock %}
+{% block script %}
+    <script>
+        $(".sec_img").one("error", function(e){  //加入相应的图片类名
+             $(this).attr("src", "../../static/images/items/example01.png");
+        });
+    </script>
 {% endblock %}
