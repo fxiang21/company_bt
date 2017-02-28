@@ -20,22 +20,22 @@
 <div class="container projects">
       <div class="row">
         <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i> 主页</a></li>
-            <li><a href="{{ first_detail.d_id }}">{{ first_detail.name }}</a></li>
+            <li><a href="/"><i class="fa fa-dashboard"></i> 主页</a></li>
+            <li><a href="/source/list/{{ first_detail.d_id }}">{{ first_detail.name }}</a></li>
             <li class="active">{{ sec_g_detail.name }}</li>
         </ol>
 
         <div class="col-md-2">
             <ul>
                 {% for i in sec_g_list %}
-                    <li><a href="/{{ i.d_id }}"><div class="side"><div class="s01"></div>{{ i.name }}</div></a></li>
+                    <li><a href="/source/list/{{ i.d_id }}"><div class="side"><div class="s01"></div>{{ i.name }}</div></a></li>
                 {% endfor %}
             </ul>
         </div>
         <div class="col-md-10">
             <ul>
             {% for i in docs_list %}
-                <li><a href="/{{ i.d_id }}"><div class="side"><div class="s01"></div>{{ i.title }}</div></a></li>
+                <li><a href="/source/detail/{{ i.d_id }}"><div class="side">{{ i.title }}</div></a></li>
             {% endfor %}
             </ul>
 {#            <div class="con_title">{{ doc_details.title }}</div>#}
