@@ -44,12 +44,12 @@
       <div class="row">
         <ol class="breadcrumb">
             <li><a href="/"><i class="fa fa-dashboard"></i> 主页</a></li>
-            <li><a href="{{ first_detail.d_id }}">{{ first_detail.name }}</a></li>
-            <li><a href="{{ sec_g_detail.d_id }}">{{ sec_g_detail.name }}</a></li>
+            <li><a href="javascript:void(0)">{{ first_detail.name }}</a></li>
+            <li><a href="/source/list/{{ sec_g_detail.d_id }}">{{ sec_g_detail.name }}</a></li>
             <li class="active">{{ doc_details.title }}</li>
         </ol>
 
-        <div id="group_list" class="col-md-2" style="border-right: 1px solid black">
+        <div id="group_list" class="col-md-2" style="-webkit-box-shadow: 1px 1px 5px #ccc;">
             <ul>
                 {% for i in sec_g_list %}
                     <li><a href="/{{ i.d_id }}">{{ i.name }}</a></li>

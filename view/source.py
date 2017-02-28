@@ -20,25 +20,6 @@ def index():
     return render_template("detail/index.html")
 
 
-@source.route('/<item>', methods=['GET'])
-def index_page(item):
-
-    print '.......'
-
-    # group = request.values.get('group')
-    # r = NewsGroup.query_one(**{"name": item})
-    # if r:
-    #     r1 = News.query(**{"group": group,'category':r.ngid})
-    #     # if r1:
-    #
-    # print '.....'
-    # print r
-    # print r.alias
-    # NewsGroup.query(**{})
-    # query(cls, limit=None, offset=None, desc=None, in_column=None, belong=None, **kwargs):
-    return render_template("content/list_detail.html")
-
-
 @source.route('/detail/<fid>', methods=['GET'])
 def source_detail(fid):
     f = doc_manager.docs_details(fid)
@@ -78,3 +59,20 @@ def list_sec(sec_id):
                            first_detail=first_detail, sec_g_list=sec_g_list)
 
 
+@source.route('/<item>', methods=['GET'])
+def index_page(item):
+
+    print '.......'
+
+    # group = request.values.get('group')
+    # r = NewsGroup.query_one(**{"name": item})
+    # if r:
+    #     r1 = News.query(**{"group": group,'category':r.ngid})
+    #     # if r1:
+    #
+    # print '.....'
+    # print r
+    # print r.alias
+    # NewsGroup.query(**{})
+    # query(cls, limit=None, offset=None, desc=None, in_column=None, belong=None, **kwargs):
+    return render_template("content/list_detail.html")

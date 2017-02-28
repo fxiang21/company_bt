@@ -1,19 +1,27 @@
 {% extends "index.html" %}
 {% block css %}
     <style>
-{#        .side {#}
-{#            width: 100%;#}
-{#            height: 100%;#}
-{#            position: relative;#}
-{#        }#}
-{#        .s01 {#}
-{#            width: 32px;#}
-{#            height: 32px;#}
-{#            display: inline-block;#}
-{#            vertical-align: top;#}
-{#            margin-top: 15px;#}
-{#            margin-right: 15px;#}
-{#        }#}
+    .side{
+        padding-left: 5px
+    }
+    .side li a div{
+        font-size: 1.3em;
+        font-weight: 400;
+        padding: 10px;
+    }
+    .active a{
+        color: #bd2828;
+    }
+    .text-overflow {
+        display:block;/*内联对象需加*/
+        word-break:keep-all;/* 不换行 */
+        white-space:nowrap;/* 不换行 */
+        overflow:hidden;/* 内容超出宽度时隐藏超出部分的内容 */
+        text-overflow:ellipsis;/* 当对象内文本溢出时显示省略标记(...) ；需与overflow:hidden;一起使用。*/
+    }
+    .doc_title{
+        border-bottom: 1px dashed #ccc;
+    }
     </style>
 {% endblock %}
 {% block main %}
@@ -21,22 +29,31 @@
       <div class="row">
         <ol class="breadcrumb">
             <li><a href="/"><i class="fa fa-dashboard"></i> 主页</a></li>
-            <li><a href="/source/list/{{ first_detail.d_id }}">{{ first_detail.name }}</a></li>
+            <li><a href="/source/list/{{ sec_g_detail.d_id }}">{{ first_detail.name }}</a></li>
             <li class="active">{{ sec_g_detail.name }}</li>
         </ol>
 
-        <div class="col-md-2">
-            <ul>
+        <div class="col-md-3" style="-webkit-box-shadow: 1px 1px 5px #ccc;">
+            <ul class="side">
                 {% for i in sec_g_list %}
-                    <li><a href="/source/list/{{ i.d_id }}"><div class="side"><div class="s01"></div>{{ i.name }}</div></a></li>
+                    <li {% if i.name == sec_g_detail.name %}class="active" {% endif %}><a href="/source/list/{{ i.id }}"><div >{{ i.name }}</div></a></li>
                 {% endfor %}
             </ul>
         </div>
-        <div class="col-md-10">
-            <ul>
+        <div class="col-md-9">
+            <ul class="side">
+            {% if docs_list %}
             {% for i in docs_list %}
-                <li><a href="/source/detail/{{ i.d_id }}"><div class="side">{{ i.title }}</div></a></li>
+                <li>
+                    <a href="/source/detail/{{ i.d_id }}" class="col-md-12 doc_title">
+                        <div class="side text-overflow col-md-10">{{ i.title }}</div>
+                        <div class="col-md-2">{{ i.update_time.strftime('%Y-%m-%d') }}</div>
+                    </a>
+                </li>
             {% endfor %}
+            {% else %}
+                <div class="alert alert-info" role="alert">暂时没有内容</div>
+            {% endif %}
             </ul>
 {#            <div class="con_title">{{ doc_details.title }}</div>#}
 {#            <div class="con_time">日期：{{ doc_details.update_time }}</div>#}

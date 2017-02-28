@@ -44,7 +44,7 @@ def index_page():
 @index.route("details/<string:item>", methods=["GET"])
 def details(item):
     try:
-        m_type = "corp_register" if item is None else item.strip()
+        m_type = "gonsizhuce" if item is None else item.strip()
         number, r = doc_manager.doc_group_info(**{"alias": m_type})
         if r:
             sec_g_list = doc_manager.doc_groups_sec_ids(r[0].d_id)
