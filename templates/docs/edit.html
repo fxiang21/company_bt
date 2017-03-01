@@ -30,7 +30,7 @@
             <div class="form-group col-md-6 col-xs-12">
               <label for="first_group" class="control-label"><span style="color: red">*</span>版块</label>
               <div>
-                <select id="first_group" class="form-control" name="first_group" {%if not allowed_edit%}disabled{%endif%}
+                <select id="first_group" class="form-control" name="first_group" {%if not allowed_edit%}readonly{%endif%}
                         onchange="secGroup(this, 'sec_group')" required="">
                     {%if doc_details%}
                         {% for i in groups%}
@@ -53,7 +53,7 @@
                 <span id="sec_group_tips"></span>
                 <div>
                     <select id="sec_group" name="sec_group" class="form-group col-md-12 col-xs-12"
-                    {%if not allowed_edit%}disabled{%endif%}>
+                    {%if not allowed_edit%}readonly{%endif%}>
                         {%for i in sec_groups %}
                         {%if i.id == doc_details.group_id%}
                         <option value="{{i.id}}" selected>{{i.name}}</option>
@@ -68,13 +68,13 @@
                 <label for="title" class="control-label"><span style="color: red">*</span>标题</label>
                 <span id="title_tips"></span>
                 <input id="title" name="title" type="text" autocomplete="off"  class="form-control" required
-                       {%if not allowed_edit%}disabled{%endif%}
+                       {%if not allowed_edit%}readonly{%endif%}
                         value="{%if doc_details%}{{doc_details.title}}{%endif%}"/>
             </div>
             <div class="form-group col-md-6 col-xs-12">
                 <label for="comment" class="control-label">文档说明</label>
               <div>
-                <input id="comment" name="comment" class="form-control" {%if not allowed_edit%}disabled{%endif%}
+                <input id="comment" name="comment" class="form-control" {%if not allowed_edit%}readonly{%endif%}
                        value="{%if doc_details%}{{doc_details.comment}}{%endif%}"/>
               </div>
             </div>

@@ -46,8 +46,8 @@
 {% block script %}
 <script>
 $(function(){
-    $('.sec_img').error(function(){
-        $(this).attr("src", "/static/images/items/example01.png");
+    $('.sec_img').one('error',function () {
+        $(this).attr("src", "/static/images/slider/doc10.jpeg");
     })
 });
 {#    $(".sec_img").one("error", function(e){#}

@@ -457,3 +457,4 @@ def create_unique_string(str1):
     time_now = datetime.now().strftime('%y%m%d%H%M%S%f')
     unique_str = ''.join([rand_str, time_now, str1])
     return hashlib.md5(unique_str.encode("utf8")).hexdigest()
+

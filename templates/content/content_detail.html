@@ -6,13 +6,6 @@
 {#<link href="../../static/libs/magicsuggest/magicsuggest-min.css" rel="stylesheet" type="text/css">#}
 {%endif%}
 <style>
-    #group_list li {
-        padding: 5px;
-    }
-    #group_list li a{
-        font-size: 20px;
-        color: #333;
-    }
     .title {
         font-size: 18px;
         color: #333;
@@ -33,6 +26,32 @@
         padding: 10px;
         height: auto;
     }
+    .side{
+        padding-left: 5px
+    }
+    .side li a div{
+        font-size: 1.3em;
+        font-weight: 400;
+        padding: 10px;
+    }
+    .active a{
+        color: #bd2828;
+    }
+    .text-overflow {
+        display:block;/*内联对象需加*/
+        word-break:keep-all;/* 不换行 */
+        white-space:nowrap;/* 不换行 */
+        overflow:hidden;/* 内容超出宽度时隐藏超出部分的内容 */
+        text-overflow:ellipsis;/* 当对象内文本溢出时显示省略标记(...) ；需与overflow:hidden;一起使用。*/
+    }
+    .doc_title{
+        border-bottom: 1px dashed #ccc;
+    }
+    .doc_img img{
+        width: 100%;
+        margin-bottom: 20px;
+        height: 300px;
+    }
 </style>
 {% endblock %}
 
@@ -40,6 +59,9 @@
 {% block js %}
 {% endblock %}
 {% block main %}
+<div class="doc_img">
+    <img src="">
+</div>
 <div class="container projects">
       <div class="row">
         <ol class="breadcrumb">
@@ -49,15 +71,19 @@
             <li class="active">{{ doc_details.title }}</li>
         </ol>
 
-        <div id="group_list" class="col-md-2" style="-webkit-box-shadow: 1px 1px 5px #ccc;">
-            <ul>
+        <div class="container">
+            <img src="/static/images/slider/doc1.jpeg">
+        </div>
+        <div id="group_list" class="col-md-3" style="-webkit-box-shadow: 1px 1px 5px #ccc;">
+            <ul class="side">
                 {% for i in sec_g_list %}
-                    <li><a href="/{{ i.d_id }}">{{ i.name }}</a></li>
+                    <li {% if i.name == sec_g_detail.name %}class="active" {% endif %}><a href="/source/list/{{ i.id }}"><div >{{ i.name }}</div></a></li>
+{#                    <li><a href="/{{ i.d_id }}">{{ i.name }}</a></li>#}
                 {% endfor %}
             </ul>
         </div>
 
-        <div class="col-md-10">
+        <div class="col-md-9">
             <h1 class="title">{{ doc_details.title }}</h1>
             <div class="update_time">更新日期：{{ doc_details.update_time }}</div>
             <div id="details" name="details">
@@ -84,9 +110,18 @@
 
 
 <script>
+    function changeImgRandom() {
+        var num = Math.ceil(Math.random()*7);
+        var img_src = "/static/images/slider/doc" + num + ".jpeg";
+        $('.doc_img img').attr(src,img_src);
+    }
     $(function() {
         $('#details').editable({});
+        changeImgRandom();
     });
+    $('.doc_img img').one('error',function () {
+        $(this).attr("src", "/static/images/slider/doc10.jpeg");
+    })
 </script>
 {%endif%}
 <script>
