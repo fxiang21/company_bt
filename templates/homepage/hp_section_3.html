@@ -4,6 +4,9 @@
         margin: 20px 0 5px 0 !important;
         color: black !important;
     }
+    .content{
+        cursor: pointer;
+    }
 </style>
 {#<section id="services" class="" style="padding: 0;height: 107px;">#}
 <section id="services" class="" style="padding: 0;height: 665px;">
@@ -27,11 +30,11 @@
       </div>
     <div class="y-row" style="margin:0 auto">
       <ul class="card-area">
-
         <li id="card-item-1" class="card-item" data-index="0">
+            {% set product_url1 = '/source/detail/' + products["free_proxy_register"]["d_id"] | string %}
           <div class="card">
-            <div class="card-title  title-even  ">
-              <div class="content">
+            <div class="card-title  title-even ">
+              <div class="content " onclick="window.open('{{ product_url1 }}')">
                 <div class="ali-product-img">
                   <img src="/static/images/section/section_3_1.png" alt="" class="un-hover">
                   <img src="/static/images/section/section_3_1.png" alt="" class="with-hover">
@@ -69,7 +72,7 @@
                 <p class="main-desc">成功注册300家以上
                    <a href="{{ shangqiao_url}}" target="_blank"></a>
                 </p>
-                <a href="{{ shangqiao_url}}" target="_blank" data-spm-click="gostr=/aliyun;locaid=ECS">
+                <a href="{{ product_url1 }}" target="_blank" data-spm-click="gostr=/aliyun;locaid=ECS">
                   <button class="main-btn">立即注册</button>
                 </a>
               </div>
@@ -135,9 +138,10 @@
         </li>
 
         <li id="card-item-2" class="card-item active" data-index="1">
+            {% set product_url2 = '/source/detail/' + products["finance_prof"]["d_id"] | string %}
           <div class="card">
             <div class="card-title  title-odd  ">
-              <div class="content">
+              <div class="content" onclick="window.open('{{ product_url2 }}')">
                 <div class="ali-product-img">
                   <img src="/static/images/section/section_3_2.png" alt="" class="un-hover">
                   <img src="/static/images/section/section_3_2.png" alt="" class="with-hover">
@@ -166,9 +170,10 @@
             <div class="card-content content-second">
               <div class="main-info">
 
-                <p class="main-desc">成功案例2000家以上
+                <p class="main-desc">
+                    成功案例2000家以上
                 </p>
-                <a href="{{ shangqiao_url}}" target="_blank" data-spm-click="gostr=/aliyun;locaid=yumingzhuce2016">
+                <a href="{{ product_url2}}" target="_blank" data-spm-click="gostr=/aliyun;locaid=yumingzhuce2016">
                   <button class="main-btn">立即了解</button>
                 </a>
               </div>
@@ -250,11 +255,11 @@
           </div>
         </li>
 
-
         <li id="card-item-3" class="card-item" data-index="2">
+            {% set product_url3 = '/source/detail/' + products["capital_verify"]["d_id"] | string %}
           <div class="card">
             <div class="card-title  title-even  ">
-              <div class="content">
+              <div class="content"  onclick="window.open('{{ product_url3 }}')">
                 <div class="ali-product-img">
                   <img src="/static/images/section/section_3_3.png" alt="" class="un-hover">
                   <img src="/static/images/section/section_3_3.png" alt="" class="with-hover">
@@ -286,7 +291,7 @@
                 <p class="main-desc">
                     成功服务1000家以上
                 </p>
-                <a href="{{ shangqiao_url}}" target="_blank" data-spm-click="gostr=/aliyun;locaid=safeecs">
+                <a href="{{ product_url3}}" target="_blank" data-spm-click="gostr=/aliyun;locaid=safeecs">
                   <button class="main-btn">立即了解</button>
                 </a>
               </div>
@@ -352,9 +357,10 @@
         </li>
 
         <li id="card-item-4" class="card-item" data-index="3">
+             {% set product_url4 = '/source/detail/' + products["bookkeeping"]["d_id"] | string %}
           <div class="card">
             <div class="card-title  title-odd  ">
-              <div class="content">
+              <div class="content"  onclick="window.open('{{ product_url4 }}')">
                 <div class="ali-product-img">
                   <img src="/static/images/section/section_3_4.png" alt="" class="un-hover">
                   <img src="/static/images/section/section_3_4.png" alt="" class="with-hover">
@@ -385,7 +391,7 @@
                 <p class="main-desc">
                     持续服务800家以上
                 </p>
-                <a href="{{ shangqiao_url}}" target="_blank" data-spm-click="gostr=/aliyun;locaid=home_datav">
+                <a href="{{ product_url4}}" target="_blank" data-spm-click="gostr=/aliyun;locaid=home_datav">
                   <button class="main-btn">立即了解</button>
                 </a>
               </div>
@@ -451,9 +457,10 @@
         </li>
 
         <li id="card-item-5" class="card-item" data-index="3">
+            {% set product_url5 = '/source/detail/' + products["special_channel"]["d_id"] | string %}
           <div class="card">
             <div class="card-title  title-odd  ">
-              <div class="content">
+              <div class="content"  onclick="window.open('{{ product_url5 }}')">
                 <div class="ali-product-img">
                   <img src="/static/images/section/section_3_5.png" alt="" class="un-hover">
                   <img src="/static/images/section/section_3_5.png" alt="" class="with-hover">
@@ -485,7 +492,7 @@
                 <p class="main-desc">
                     成功案例不计其数
                 </p>
-                <a href="{{ shangqiao_url}}" target="_blank" data-spm-click="gostr=/aliyun;locaid=home_datav">
+                <a href="{{ product_url5}}" target="_blank" data-spm-click="gostr=/aliyun;locaid=home_datav">
                   <button class="main-btn">立即了解</button>
                 </a>
               </div>

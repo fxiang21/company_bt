@@ -181,6 +181,8 @@ class DocManage():
         if r:
             res['d_id'] = r.d_id
             res['name'] = r.name
+            res['alias'] = r.alias
+            res['category'] = r.category
         return res
 
     @staticmethod
@@ -341,5 +343,30 @@ class DocManage():
         else:
             status = False
         return status
+
+    @staticmethod
+    def default_alias_article_id(alias):  # 根据一级分类的alias获取默认的第一篇文章
+        r = db.session.query(DocRelation).join(DocGroup, DocGroup.d_id == DocRelation.group_id).\
+            filter(DocGroup.alias == alias).first()
+        if r:
+            r1 = db.session.query(DocsInfo).filter(DocsInfo.group_id == r.d_id).first()
+            if r1:
+                return r1.d_id
+        else:
+            return False
+
+    @staticmethod
+    def default_category_article_ids(category):  # 根据一级分类的category获取默认的第一篇文章的字典
+        r = db.session.query(DocRelation, DocGroup.alias, DocGroup.name).join(DocGroup, DocGroup.d_id == DocRelation.group_id).\
+            filter(DocGroup.category == category).group_by(DocRelation.group_id).all()
+        res = dict()
+        for i in r:
+            tmp = db.session.query(DocsInfo.d_id).filter(DocsInfo.group_id == i[0].d_id).first()
+            if tmp:
+                res[i[1]] = {'d_id': r[0], 'g_name': i[2]}
+            else:
+                res[i[1]] = {'d_id': 0, 'g_name': i[2]}
+        return res
+
 
 

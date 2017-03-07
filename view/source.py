@@ -1,7 +1,7 @@
 #!/bin/env python
 # encoding=utf-8
 
-from flask import Blueprint, render_template, request, jsonify
+from flask import Blueprint, render_template, request, jsonify, redirect
 from lib.docs import DocManage
 from lib.db import News, NewsGroup
 import sys
@@ -24,7 +24,7 @@ def index():
 def source_detail(fid):
     f = doc_manager.docs_details(fid)
     if not f:
-        pass
+        return redirect('/')
     else:
         sec_id = f.group_id
         sec_g_detail = doc_manager.group_sec_detail(sec_id)
@@ -33,7 +33,6 @@ def source_detail(fid):
         sec_g_list = doc_manager.doc_groups_sec_ids(sec_g_detail.get('group_id'))
         return render_template("content/content_detail.html", doc_details=f, first_detail=first_detail,
                                sec_g_detail=sec_g_detail, sec_g_list=sec_g_list)
-
 
     # group = request.values.get('group')
     # r = NewsGroup.query_one(**{"name": item})
@@ -46,7 +45,7 @@ def source_detail(fid):
     # print r.alias
     # NewsGroup.query(**{})
     # query(cls, limit=None, offset=None, desc=None, in_column=None, belong=None, **kwargs):
-    return render_template("content/list_detail.html")
+    # return render_template("content/list_detail.html")
 
 
 @source.route('/list/<sec_id>', methods=['GET'])

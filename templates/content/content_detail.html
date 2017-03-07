@@ -62,8 +62,16 @@
 <div class="doc_img">
     <img src="">
 </div>
+    <div>{{ first_detail }}</div>
 <div class="container projects">
-      <div class="row">
+    <div class="row">
+    {% if first_detail.category not in ["products", "menu"] or first_detail.alias=="gongsizhuanrang"%}
+        <div class="col-md-12 col-xs-12">
+            <div id="details" name="details">
+                {{doc_details.details | safe}}
+            </div>
+        </div>
+    {% else %}
         <ol class="breadcrumb">
             <li><a href="/"><i class="fa fa-dashboard"></i> 主页</a></li>
             <li><a href="javascript:void(0)">{{ first_detail.name }}</a></li>
@@ -78,7 +86,6 @@
                 {% endfor %}
             </ul>
         </div>
-
         <div class="col-md-9">
             <h1 class="title">{{ doc_details.title }}</h1>
             <div class="update_time">更新日期：{{ doc_details.update_time }}</div>
@@ -86,6 +93,7 @@
                 {{doc_details.details | safe}}
             </div>
         </div>
+    {% endif %}
     </div>
 </div>
 <!--<embed id="plugin" type="application/x-google-chrome-pdf" src="/static/docs/{{name}}.pdf"></embed>-->

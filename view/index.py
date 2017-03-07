@@ -26,17 +26,17 @@ redis_cache = redis.Redis(host=REDIS['host'],port=REDIS['port'], db=REDIS['db'])
 @index.route('', methods=['GET'])
 def index_page():
     try:
-        # groups_db = data.NewsGroup.query()
-        # groups = SqlResultConvert.to_list(groups_db)
         news = dict()
-        # for group in groups:
-        #     r, num = data.News.query_num(limit=5, desc="created", **{"group": group.get("ngid")})
-        #     news[group.get("ngid")] = SqlResultConvert.to_list(r)
         total_number_2, docs_list_1 = doc_manager.doc_info("", 5, "", **{"group_id": 28})
         total_number_1, docs_list_2 = doc_manager.doc_info("", 5, "", **{"group_id": 25})
         total_number_3, docs_list_3 = doc_manager.doc_info("", 5, "", **{"group_id": 29})
-        return render_template('homepage.html', m_type='hp', news=news, docs_list_1=docs_list_1,
-                               docs_list_2=docs_list_2, docs_list_3=docs_list_3)
+        sliders = doc_manager.default_category_article_ids("sliders")
+        products = doc_manager.default_category_article_ids("products")
+        default_register_id = doc_manager.default_alias_article_id("gongsizhuanrang")
+        return render_template('homepage.html', m_type='hp', news=news,
+                               docs_list_1=docs_list_1, docs_list_2=docs_list_2,
+                               docs_list_3=docs_list_3, sliders=sliders, products=products,
+                               default_register_id=default_register_id)
     except Exception as e:
         return jsonify(message=str(e))
 
