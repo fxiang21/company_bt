@@ -31,8 +31,9 @@ def source_detail(fid):
         first_detail = doc_manager.group_detail(sec_g_detail.get('group_id'))
 
         sec_g_list = doc_manager.doc_groups_sec_ids(sec_g_detail.get('group_id'))
+        default_register_id = doc_manager.default_alias_article_id("gongsizhuanrang")
         return render_template("content/content_detail.html", doc_details=f, first_detail=first_detail,
-                               sec_g_detail=sec_g_detail, sec_g_list=sec_g_list)
+                               sec_g_detail=sec_g_detail, sec_g_list=sec_g_list, default_register_id=default_register_id)
 
     # group = request.values.get('group')
     # r = NewsGroup.query_one(**{"name": item})
@@ -54,8 +55,9 @@ def list_sec(sec_id):
     sec_g_detail = doc_manager.group_sec_detail(sec_id)
     first_detail = doc_manager.group_detail(sec_g_detail.get('group_id'))
     sec_g_list = doc_manager.doc_groups_sec_ids(sec_g_detail.get('group_id'))
+    default_register_id = doc_manager.default_alias_article_id("gongsizhuanrang")
     return render_template('content/list_detail.html', docs_list=docs_list, sec_g_detail=sec_g_detail,
-                           first_detail=first_detail, sec_g_list=sec_g_list)
+                           first_detail=first_detail, sec_g_list=sec_g_list, default_register_id=default_register_id)
 
 
 @source.route('/<item>', methods=['GET'])

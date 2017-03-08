@@ -363,7 +363,7 @@ class DocManage():
         for i in r:
             tmp = db.session.query(DocsInfo.d_id).filter(DocsInfo.group_id == i[0].d_id).first()
             if tmp:
-                res[i[1]] = {'d_id': r[0], 'g_name': i[2]}
+                res[i[1]] = {'d_id': tmp[0], 'g_name': i[2]}
             else:
                 res[i[1]] = {'d_id': 0, 'g_name': i[2]}
         return res

@@ -62,10 +62,9 @@
 <div class="doc_img">
     <img src="">
 </div>
-    <div>{{ first_detail }}</div>
 <div class="container projects">
     <div class="row">
-    {% if first_detail.category not in ["products", "menu"] or first_detail.alias=="gongsizhuanrang"%}
+    {% if first_detail.category not in ["menu", "menu"] or first_detail.alias=="gongsizhuanrang"%}
         <div class="col-md-12 col-xs-12">
             <div id="details" name="details">
                 {{doc_details.details | safe}}
