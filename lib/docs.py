@@ -201,6 +201,11 @@ class DocManage():
         return r
 
     @staticmethod
+    def docs_details_first(group_id):  # 获取二级分组里面第一篇文档
+        r = db.session.query(DocsInfo).filter(DocsInfo.group_id == group_id).first()
+        return r
+
+    @staticmethod
     def new_docs(**kwargs):  # 添加新文档信息
         docs_info = DocsInfo()
         docs_info.input_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')

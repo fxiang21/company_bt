@@ -1,9 +1,6 @@
 #!/usr/bin/env python
 #encoding=utf-8
 
-__author__ = 'lucky'
-
-
 import uuid
 import datetime
 import json
@@ -13,6 +10,9 @@ import hashlib
 import re
 from Crypto.Cipher import AES
 from binascii import b2a_hex, a2b_hex
+
+
+__author__ = 'xiangfeng'
 
 from functools import wraps
 from flask import session, current_app

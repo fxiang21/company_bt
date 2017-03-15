@@ -32,11 +32,9 @@ def index_page():
         total_number_3, docs_list_3 = doc_manager.doc_info("", 5, "", **{"group_id": 29})
         sliders = doc_manager.default_category_article_ids("sliders")
         products = doc_manager.default_category_article_ids("products")
-        default_register_id = doc_manager.default_alias_article_id("gongsizhuanrang")
         return render_template('homepage.html', m_type='hp', news=news,
                                docs_list_1=docs_list_1, docs_list_2=docs_list_2,
-                               docs_list_3=docs_list_3, sliders=sliders, products=products,
-                               default_register_id=default_register_id)
+                               docs_list_3=docs_list_3, sliders=sliders, products=products)
     except Exception as e:
         return jsonify(message=str(e))
 
@@ -59,6 +57,15 @@ def details(item):
 def detail(item):
     m_type = "corp_register" if item is None else item
     return render_template("content/content_detail.html", m_type=m_type)
+
+
+@index.route("first_info/<int:_id>", methods=['GET'])
+def first_info(_id):
+    r = doc_manager.docs_details_first(_id)
+    if r:
+        return redirect(url_for("source.source_detail", fid=r.d_id))
+    else:
+        return redirect('source/list/%d' % _id)
 
 
 @index.route("profile", methods=["GET"])

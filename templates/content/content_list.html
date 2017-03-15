@@ -25,7 +25,11 @@
       {% for i in sec_g_list %}
         <div class="col-sm-6 col-md-4 col-lg-3 child_item">
           <div class="thumbnail" style="height: {{ height_1 }}px;">
-            <a href="/source/list/{{ i.id }}" target="_blank">
+              {% if m_type  in ["gongsizhuanrang"] %}
+                  <a href="/source/detail/{{ default_register_id }}" target="_blank">
+                  {% else %}
+                  <a href="/source/list/{{ i.id }}" target="_blank">
+                {% endif %}
                 <img class="lazy child_item sec_img" style="width: 100%;height: {{ height_2 }}px" src="/static/images/items/classes/{{ i.name }}.jpg"></a>
             <div class="caption" style="text-align: center">
               <h3 style="color: darkred">{{ i.name }}
@@ -34,7 +38,11 @@
               {{ i.description }}
               </p>
                 <div class="pp_middle" style="text-align: center">
-                    <a href="/source/list/{{ i.id }}" class="btn btn-md btn-danger">了解更多</a>
+                  {% if m_type  in ["gongsizhuanrang"] %}
+                      <a href="/first_info/{{ i.id }}" class="btn btn-md btn-danger">了解更多</a>
+                      {% else %}
+                      <a href="/source/list/{{ i.id }}" class="btn btn-md btn-danger">了解更多</a>
+                  {% endif %}
                 </div>
             </div>
           </div>
@@ -42,6 +50,8 @@
       {% endfor %}
     </div>
 </div>
+    <a href="{% if default_register_id %}/source/detail/{{ default_register_id }}{% else %}/details/gongsizhuanrang{% endif %}"
+                               target="_blank">公司转让</a>
 {% endblock %}
 {% block script %}
 <script>
